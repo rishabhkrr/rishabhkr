@@ -39,6 +39,11 @@ sr.reveal('.button',{delay: 200});
 sr.reveal('.home__img',{delay: 400}); 
 sr.reveal('.home__social-icon',{ interval: 200}); 
 
+/*SCROLL EDUCATION*/ 
+sr.reveal('.edu__img',{}); 
+sr.reveal('.edu__subtitle',{delay: 300}); 
+sr.reveal('.edu__text',{delay: 300});
+
 /*SCROLL ABOUT*/
 sr.reveal('.about__img',{}); 
 sr.reveal('.about__subtitle',{delay: 400}); 
