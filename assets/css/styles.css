@@ -246,6 +246,23 @@ img {
 	box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);
 }
 
+/* ===== EDUCATION =====*/
+.edu__container {
+	row-gap: 2rem;
+	text-align: center;
+}
+.edu__subtitle {
+	margin-bottom: var(--mb-2);
+}
+.edu__img {
+	justify-self: center;
+}
+.edu__img img {
+	width: 200px;
+	border-radius: 0.5rem;
+}
+
+
 /* ===== ABOUT =====*/
 .about__container {
 	row-gap: 2rem;
