@@ -74,7 +74,7 @@ a {
 	text-decoration: none;
 }
 img {
-	max-width: 100%;
+	max-width: 82%;
 	height: auto;
 	display: block;
 	border-radius: 0.5rem;
@@ -165,9 +165,9 @@ img {
 	background-color: var(--first-color);
 }
 .nav__logo {
-	height: 60px;
-	margin: 22px;
-	width: 114px;
+	height: 50px;
+	margin: 20px;
+	width: 104px;
 	color: var(--second-color);
 }
 
@@ -210,7 +210,8 @@ img {
 }
 .home__social {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	justify-content: center;
 }
 .fhome__social {
 	display: flex;
@@ -220,17 +221,16 @@ img {
 .home__social-icon {
 	width: max-content;
 	margin-bottom: var(--mb-2);
-	font-size: 1.5rem;
+	font-size: 1.8rem;
 	color: var(--second-color);
 }
 .home__social-icon:hover {
 	color: var(--first-color);
 }
 .home__img {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	width: 295px;
+	margin-left:auto;
+	margin-right:auto;
+	width:auto;
 }
 
 /*BUTTONS*/
@@ -276,6 +276,8 @@ img {
 }
 .about__img img {
 	width: 200px;
+	margin-left:auto;
+	margin-right:auto;
 	border-radius: 0.5rem;
 }
 
@@ -320,34 +322,32 @@ img {
 	z-index: var(--z-back);
 }
 .skills__html {
-	width: 95%;
+	width: 80%;
 }
 .skills__css {
-	width: 85%;
+	width: 50%;
 }
 .skills__js {
-	width: 65%;
+	width: 40%;
 }
 .skills__rjs {
-	width: 65%;
+	width: 80%;
 }
-.skills__njs {
-	width: 65%;
-}
+
 .skills__django {
-	width: 75%;
+	width: 40%;
 }
 .skills__php {
-	width: 55%;
+	width: 40%;
 }
 .skills__c {
-	width: 65%;
+	width: 80%;
 }
 .skills__python {
-	width: 85%;
+	width: 60%;
 }
 .skills__my {
-	width: 70%;
+	width: 85%;
 }
 /*
 .skills__njs {
@@ -368,10 +368,11 @@ img {
 }
 .work__img img {
 	transition: 1s;
+	max-width:100%;
 	cursor: pointer;
 }
 .work__img img:hover {
-	transform: scale(1.1);
+	transform: scale(0.8);
 }
 
 /* ===== CONTACT =====*/
