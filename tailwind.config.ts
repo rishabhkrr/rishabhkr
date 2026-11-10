@@ -1,61 +1,43 @@
 import type { Config } from 'tailwindcss';
 
+/** Colours are CSS variables (see globals.css) so light/dark share one class set. */
+const v = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './content/**/*.{js,ts,jsx,tsx,mdx}',
+  content: ['./src/**/*.{ts,tsx}'],
+  // `dark:` = explicit toggle, or system dark when the visitor hasn't chosen light
+  darkMode: [
+    'variant',
+    ['&:is([data-theme="dark"] *)', '@media (prefers-color-scheme: dark) { &:not([data-theme="light"] *) }'],
   ],
   theme: {
     extend: {
       colors: {
-        bg: {
-          DEFAULT: '#09090b',
-          card: 'rgba(24, 24, 27, 0.6)',
-          elevated: 'rgba(39, 39, 42, 0.5)',
-        },
-        text: {
-          primary: '#fafafa',
-          secondary: '#a1a1aa',
-          muted: '#52525b',
-        },
-        accent: {
-          DEFAULT: '#7c5cff',
-          glow: 'rgba(124, 92, 255, 0.15)',
-          secondary: '#06b6d4',
-        },
-        border: {
-          DEFAULT: 'rgba(63, 63, 70, 0.5)',
-          glow: 'rgba(124, 92, 255, 0.3)',
-          subtle: 'rgba(39, 39, 42, 0.5)',
-        },
+        bg: v('bg'),
+        surface: v('surface'),
+        'surface-2': v('surface-2'),
+        fg: v('fg'),
+        muted: v('muted'),
+        line: v('line'),
+        accent: v('accent'),
+        'accent-ink': v('accent-ink'),
+        'accent-soft': v('accent-soft'),
+        ok: v('ok'),
       },
       fontFamily: {
-        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['IBM Plex Mono', 'monospace'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
       },
-      spacing: {
-        '18': '4.5rem',
-        '22': '5.5rem',
-        '30': '7.5rem',
-      },
-      borderRadius: {
-        'sm': '8px',
-        'md': '12px',
-        'lg': '16px',
-        'xl': '24px',
-      },
-      animation: {
-        'float': 'float 20s ease-in-out infinite',
-        'float-delayed': 'float 25s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      maxWidth: {
+        prose: '70ch',
+        site: '72rem',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-          '50%': { transform: 'translate(-40px, 30px) scale(1.1)' },
-        },
+        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+        ping: { '75%, 100%': { transform: 'scale(2.2)', opacity: '0' } },      },
+      animation: {
+        marquee: 'marquee 45s linear infinite',
+        ping: 'ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
     },
   },
