@@ -32,3 +32,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private source material (contains unredacted client names / personal notes)
+/PORTFOLIO_CONTENT*.md
+/MASTER_PROMPT.md
+/Resume.pdf
