@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Theme tokens (RGB triplets so Tailwind can apply alpha) ---------- */
+:root {
+  --bg: 250 250 247;          /* #FAFAF7 warm off-white */
+  --surface: 255 255 255;
+  --surface-2: 242 242 236;
+  --fg: 17 19 23;             /* near-black */
+  --muted: 79 84 95;          /* AA on bg and surface */
+  --line: 224 224 216;
+  --accent: 15 118 110;       /* teal-700, AA on light */
+  --accent-ink: 255 255 255;  /* text on accent buttons */
+  --accent-soft: 15 118 110;  /* used at low alpha for tints */
+  --ok: 22 163 74;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: 11 13 18;           /* #0B0D12 */
+    --surface: 18 21 28;
+    --surface-2: 25 29 38;
+    --fg: 236 237 239;
+    --muted: 160 166 179;
+    --line: 38 43 56;
+    --accent: 45 212 191;     /* teal-400 */
+    --accent-ink: 4 32 29;
+    --accent-soft: 45 212 191;
+    --ok: 74 222 128;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: 11 13 18;
+  --surface: 18 21 28;
+  --surface-2: 25 29 38;
+  --fg: 236 237 239;
+  --muted: 160 166 179;
+  --line: 38 43 56;
+  --accent: 45 212 191;
+  --accent-ink: 4 32 29;
+  --accent-soft: 45 212 191;
+  --ok: 74 222 128;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    background-color: rgb(var(--bg));
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-fg;
+    text-wrap: balance;
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-4 sm:px-6 lg:px-8;
+  }
+  .section {
+    @apply py-20 sm:py-28;
+    /* skip style/layout for off-screen sections until they approach the viewport */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent;
+  }
+  .h2 {
+    @apply text-3xl font-semibold sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1];
+  }
+  .lead {
+    @apply mt-4 max-w-prose text-lg text-muted;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-surface;
+  }
+  .card-hover {
+    @apply transition duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_12px_32px_-16px_rgb(0_0_0/0.25)];
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-2.5 py-1 text-xs font-medium text-muted;
+  }
+  .btn {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold transition duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-accent-ink hover:brightness-110 active:translate-y-px;
+  }
+  .btn-secondary {
+    @apply btn border border-line bg-surface text-fg hover:border-accent/50;
+  }
+  .link {
+    @apply font-medium text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent;
+  }
+  .num {
+    @apply font-display tabular-nums text-accent;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* scroll reveal (see Reveal.tsx); content stays visible without JS */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+  .js .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal { opacity: 1; transform: none; }
+  }
+
+  /* hero background: soft dot grid with a radial fade */
+  .hero-grid {
+    background-image: radial-gradient(rgb(var(--fg) / 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 100%);
+  }
+  .hero-glow {
+    background:
+      radial-gradient(40rem 22rem at 15% 10%, rgb(var(--accent) / 0.14), transparent 70%),
+      radial-gradient(30rem 20rem at 90% 0%, rgb(99 102 241 / 0.10), transparent 70%);
+  }
+
+  /* used via arbitrary animate-[…] classes (Tailwind only emits keyframes for named animations) */
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+}
