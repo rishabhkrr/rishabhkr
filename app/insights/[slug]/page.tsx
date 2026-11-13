@@ -16,9 +16,13 @@ export function generateStaticParams() {
   return (slugs.length ? slugs : ['_']).map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const meta = insights.find((i) => i.slug === params.slug);
-  if (!meta || !publishedSlugs().includes(params.slug)) return { robots: { index: false } };
+// Next 15: route params are async.
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const meta = insights.find((i) => i.slug === slug);
+  if (!meta || !publishedSlugs().includes(slug)) return { robots: { index: false } };
   return {
     title: `${meta.title} — ${profile.name}`,
     description: meta.excerpt,
@@ -27,10 +31,11 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const meta = insights.find((i) => i.slug === params.slug);
-  const article = articles.find((a) => a.slug === params.slug);
-  if (!meta || !article || !publishedSlugs().includes(params.slug)) notFound();
+export default async function ArticlePage({ params }: Props) {
+  const { slug } = await params;
+  const meta = insights.find((i) => i.slug === slug);
+  const article = articles.find((a) => a.slug === slug);
+  if (!meta || !article || !publishedSlugs().includes(slug)) notFound();
 
   return (
     <article className="container max-w-3xl pb-24 pt-32">

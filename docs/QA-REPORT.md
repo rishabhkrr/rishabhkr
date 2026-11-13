@@ -1,5 +1,21 @@
 # QA Report — Portfolio Redesign (shadcn/ui + Magic UI)
 
+## Latest run — cinematic + Next.js 15.5.28 / React 19 (production build, gzip)
+
+| Check | Result |
+| ----- | ------ |
+| Type-check, lint, production build | ✅ Pass |
+| Functional QA | ✅ 32/32 (includes cinematic chapters and the case-study dialog) |
+| Responsive QA | ✅ 10 viewports × 2 themes: no horizontal overflow, no console errors |
+| Intro, WebGL hero, pinned chapters | ✅ Render with no errors; chapters stay sharp at 9 of 12 sampled scroll positions |
+| Lighthouse, mobile | Performance 79–88 · Accessibility 100 · Best practices 100 · SEO 100 (observed LCP 0.4–0.9 s) |
+| Lighthouse, desktop | Performance 93 · Accessibility 100 · Best practices 100 · SEO 100 |
+| `npm audit` | No vulnerabilities in production dependencies. 6 moderate findings remain in dev-only lint tooling (typescript-eslint / minimatch). |
+
+Not executed: real-device testing (emulation only), and a Lighthouse run against the live GitHub Pages URL.
+
+---
+
 **Date:** 2026-11-13
 **Build:** Next.js 14.2.35 static export
 **Tested against:** production build (`out/`), served locally, headless Chrome (puppeteer-core)

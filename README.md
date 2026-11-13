@@ -2,7 +2,7 @@
 
 Personal portfolio for a Product-Focused Business Analyst & Product Owner (Fintech · ERP/WMS · AI automation).
 
-**Stack:** Next.js 14 (App Router, static export) · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion · GSAP ScrollTrigger · Lenis · Lottie · Geist · Lucide icons
+**Stack:** Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion · GSAP ScrollTrigger · Lenis · Lottie · three.js · Geist · Lucide icons
 
 ## Quick start
 
