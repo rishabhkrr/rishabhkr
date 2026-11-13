@@ -8,7 +8,7 @@ const basePath = process.env.BASE_PATH || '';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  // Lets a verification build run without clobbering a running dev server's .next folder.
+  // Optional separate build folder for verification builds (restart a running dev server afterwards).
   distDir: process.env.NEXT_DIST_DIR || '.next',
   basePath,
   images: {
