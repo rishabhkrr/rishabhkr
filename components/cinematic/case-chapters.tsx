@@ -98,8 +98,13 @@ export function CaseChapters({ studies, onOpen }: { studies: CaseStudy[]; onOpen
             starts.push(0);
           } else {
             const prev = frames[i - 1];
-            tl.to(prev, { autoAlpha: 0, scale: 0.97, filter: 'blur(4px)', duration: CUT })
-              .fromTo(frame, { autoAlpha: 0, scale: 1.03, filter: 'blur(4px)' }, { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: CUT }, '<0.15');
+            tl.to(prev, { autoAlpha: 0, scale: 0.97, rotateY: -10, z: -120, filter: 'blur(4px)', transformOrigin: '0% 50%', duration: CUT })
+              .fromTo(
+                frame,
+                { autoAlpha: 0, scale: 1.03, rotateY: 10, z: -120, filter: 'blur(4px)', transformOrigin: '100% 50%' },
+                { autoAlpha: 1, scale: 1, rotateY: 0, z: 0, filter: 'blur(0px)', duration: CUT },
+                '<0.15'
+              );
             // The chapter counts as "current" from the midpoint of its cut-in.
             starts.push(tl.duration() - CUT / 2);
             tl.fromTo(frame.querySelector('[data-ch-visual]'), { scale: 1.08 }, { scale: 1, duration: CUT + HOLD * 0.6, ease: 'power1.out' }, '<');
@@ -144,9 +149,9 @@ export function CaseChapters({ studies, onOpen }: { studies: CaseStudy[]; onOpen
   }
 
   return (
-    <div ref={stage} className="relative h-[100svh] w-full overflow-hidden" aria-roledescription="carousel">
+    <div ref={stage} className="relative h-[100svh] w-full overflow-hidden [perspective:1600px]" aria-roledescription="carousel">
       <div className="absolute inset-0 flex items-center pt-16">
-        <div className="relative h-[72svh] w-full">
+        <div className="relative h-[72svh] w-full [transform-style:preserve-3d]">
           {studies.map((s, i) => (
             <Chapter key={s.id} s={s} i={i} total={studies.length} onOpen={() => onOpen(i)} pinned />
           ))}

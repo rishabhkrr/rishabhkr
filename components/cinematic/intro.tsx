@@ -81,14 +81,15 @@ export function Intro() {
   if (gone) return null;
 
   return (
-    <div ref={root} data-intro className="fixed inset-0 z-[100]" aria-label="Opening title sequence" role="presentation">
+    <div ref={root} data-intro className="fixed inset-0 z-[100]">
       <div data-bar="top" className="absolute inset-x-0 top-0 h-1/2 bg-black" />
       <div data-bar="bottom" className="absolute inset-x-0 bottom-0 h-1/2 bg-black" />
       <div data-content className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white">
         <p data-kicker className="translate-y-2 font-mono text-[11px] uppercase tracking-[0.4em] text-white/50 opacity-0">
           A portfolio by
         </p>
-        <p className="mt-5 flex flex-wrap justify-center text-[clamp(2.2rem,7vw,5.5rem)] font-semibold leading-none tracking-[0.12em]" aria-label={profile.name}>
+        <p className="mt-5 flex flex-wrap justify-center text-[clamp(2.2rem,7vw,5.5rem)] font-semibold leading-none tracking-[0.12em]">
+          <span className="sr-only">{profile.name}</span>
           {name.split('').map((c, i) => (
             <span key={i} data-char aria-hidden className="inline-block translate-y-6 opacity-0 [filter:blur(10px)]">
               {c === ' ' ? ' ' : c}

@@ -4,6 +4,7 @@ import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform } fr
 import { ArrowRight, ArrowUpRight, Download, FileText, MapPin } from 'lucide-react';
 import { useRef } from 'react';
 import { useIntroDone } from '@/components/cinematic/intro';
+import { HeroScene } from '@/components/cinematic/hero-scene';
 import { links, profile } from '@/content/site';
 import { asset, prefillContact } from '@/lib/contact';
 import { scrollToId, useLenis } from '@/components/animations/SmoothScroll';
@@ -75,6 +76,7 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
   return (
     <section id="home" ref={ref} onPointerMove={onMove} className="relative flex min-h-[100svh] flex-col overflow-hidden">
       <DotPattern className="[mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]" />
+      <HeroScene className="opacity-0 [mask-image:radial-gradient(ellipse_60%_65%_at_50%_45%,black_20%,transparent_75%)]" />
       <motion.div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: light }} />
       <div aria-hidden className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[1100px] max-w-[140%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,hsl(32_90%_60%/0.10),transparent_60%)] blur-2xl" />
 

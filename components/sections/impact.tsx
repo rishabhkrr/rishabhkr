@@ -9,22 +9,25 @@ import { NumberTicker } from '@/components/magicui/number-ticker';
 import { BeamFlow } from '@/components/magicui/animated-beam';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { TiltCard } from '@/components/cinematic/tilt-card';
 import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const m = (label: string) => metrics.find((x) => x.label === label)!;
 
 function Tile({ className, children, delay = 0 }: { className?: string; children: React.ReactNode; delay?: number }) {
   return (
-    <BlurFade delay={delay} className={cn('relative overflow-hidden rounded-2xl border bg-card p-4 sm:p-6', className)}>
-      {children}
+    <BlurFade delay={delay} className={className}>
+      <TiltCard className="h-full" max={5}>
+        <div className="relative h-full overflow-hidden rounded-2xl border bg-card p-4 sm:p-6">{children}</div>
+      </TiltCard>
     </BlurFade>
   );
 }
 
 function Delivered({ compact = false }: { compact?: boolean }) {
   return (
-    <Badge variant="success" aria-label="Delivered">
-      <CheckCircle2 className="h-3 w-3" /> <span className={compact ? 'hidden sm:inline' : ''}>Delivered</span>
+    <Badge variant="success">
+      <CheckCircle2 className="h-3 w-3" aria-hidden /> <span className={compact ? 'sr-only sm:not-sr-only' : ''}>Delivered</span>
     </Badge>
   );
 }

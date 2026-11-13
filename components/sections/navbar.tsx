@@ -72,8 +72,11 @@ export function Navbar() {
           scrolled ? 'border-border bg-background/75 shadow-lg shadow-black/5 backdrop-blur-xl' : 'border-transparent bg-transparent'
         )}
       >
-        <a href="#home" onClick={go('home')} aria-label={`${profile.name} — home`} className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <a href="#home" onClick={go('home')} className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <Logo />
+          <span className="sr-only">
+            <span className="sm:hidden"> {profile.name}</span> — home
+          </span>
         </a>
 
         <ul className="hidden items-center gap-0.5 lg:flex">
