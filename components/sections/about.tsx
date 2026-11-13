@@ -2,6 +2,7 @@ import { Boxes, ClipboardList, Compass, Database, Landmark, Users, Workflow } fr
 import { profile } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { TextReveal } from '@/components/magicui/text-reveal';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const expertise = [
   { icon: ClipboardList, title: 'Business analysis', text: 'BRDs, FRDs, process maps and gap analysis engineers can build from.' },
@@ -18,7 +19,7 @@ export function About({ portrait }: { portrait?: string }) {
     <section id="about" className="section">
       <div className="container">
         <BlurFade>
-          <p className="section-label">About</p>
+          <SceneLabel n="03">About</SceneLabel>
         </BlurFade>
         <TextReveal
           className="mt-6 max-w-5xl text-3xl font-semibold leading-[1.15] tracking-tighter md:text-5xl"
@@ -27,18 +28,36 @@ export function About({ portrait }: { portrait?: string }) {
 
         <div className="mt-16 grid gap-10 lg:grid-cols-12">
           <BlurFade className="lg:col-span-4">
-            <div className="flex items-center gap-4">
-              {portrait ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={portrait} alt={`Portrait of ${profile.name}`} className="h-16 w-16 rounded-full border object-cover" loading="lazy" />
-              ) : (
+            {portrait ? (
+              <figure className="group relative overflow-hidden rounded-2xl border bg-card">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={portrait}
+                  alt={`Portrait of ${profile.name}`}
+                  width={720}
+                  height={720}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-square w-full object-cover grayscale transition-all duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+                />
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 text-white">
+                  <span>
+                    <span className="block font-semibold">{profile.name}</span>
+                    <span className="block text-xs text-white/70">{profile.location}</span>
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">Lead role</span>
+                </figcaption>
+              </figure>
+            ) : (
+              <div className="flex items-center gap-4">
                 <span className="flex h-16 w-16 items-center justify-center rounded-full border bg-muted font-mono text-lg font-semibold">RK</span>
-              )}
-              <div>
-                <p className="font-semibold">{profile.name}</p>
-                <p className="text-sm text-muted-foreground">{profile.location}</p>
+                <div>
+                  <p className="font-semibold">{profile.name}</p>
+                  <p className="text-sm text-muted-foreground">{profile.location}</p>
+                </div>
               </div>
-            </div>
+            )}
             <div className="mt-6 space-y-4 text-muted-foreground">
               {profile.summary.map((p) => (
                 <p key={p} className="text-pretty leading-relaxed">

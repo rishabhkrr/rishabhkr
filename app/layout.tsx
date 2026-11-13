@@ -3,10 +3,13 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { links, profile, siteUrl } from '@/content/site';
-import { themeInitScript } from '@/hooks/useTheme';
+import { themeInitScript } from '@/lib/theme';
 import { SmoothScroll } from '@/components/animations/SmoothScroll';
 import { Navbar } from '@/components/sections/navbar';
 import { Analytics } from '@vercel/analytics/react';
+import { Intro } from '@/components/cinematic/intro';
+import { introInitScript } from '@/lib/intro';
+import { Atmosphere } from '@/components/cinematic/atmosphere';
 
 const title = 'Rishabh Kumar | Senior Business Analyst & Product Owner | Fintech, ERP & AI';
 const description =
@@ -54,7 +57,7 @@ const onVercel = process.env.VERCEL === '1';
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: light)', color: '#09090b' },
     { media: '(prefers-color-scheme: dark)', color: '#09090b' },
   ],
   width: 'device-width',
@@ -78,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript + introInitScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       </head>
       <body>
@@ -86,9 +89,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SmoothScroll>
+          <Intro />
           <Navbar />
           <main id="main">{children}</main>
         </SmoothScroll>
+        <Atmosphere />
         {onVercel && <Analytics />}
       </body>
     </html>

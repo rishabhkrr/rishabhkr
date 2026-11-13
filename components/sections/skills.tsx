@@ -3,6 +3,7 @@ import { certifications, skillGroups } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { Badge } from '@/components/ui/badge';
 import { BadgeCheck, Hourglass, ArrowUpRight } from 'lucide-react';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const icons: Record<string, LucideIcon> = { compass: Compass, clipboard: ClipboardList, chart: BarChart3, cpu: Cpu, boxes: Boxes, sparkles: Sparkles };
 
@@ -11,8 +12,8 @@ export function Skills() {
     <section id="skills" className="section border-y bg-muted/30">
       <div className="container">
         <BlurFade>
-          <p className="section-label">Skills &amp; expertise</p>
-          <h2 className="section-title">A connected skill set.</h2>
+          <SceneLabel n="06">Skills &amp; expertise</SceneLabel>
+          <SceneTitle text="A connected skill set." />
           <p className="section-lead">Product, analysis, data, technology, enterprise systems and AI — used together. No vanity percentages.</p>
         </BlurFade>
 
@@ -53,8 +54,8 @@ export function Certifications() {
     <section id="certifications" className="section">
       <div className="container">
         <BlurFade>
-          <p className="section-label">Certifications</p>
-          <h2 className="section-title">Credentials, and what&apos;s next.</h2>
+          <SceneLabel n="07">Certifications</SceneLabel>
+          <SceneTitle text="Credentials, and what's next." />
         </BlurFade>
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {certifications.map((c, i) => {

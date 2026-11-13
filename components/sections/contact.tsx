@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input, Label, Textarea } from '@/components/ui/input';
 import { Logo } from './navbar';
 import { ResumeButton } from './hero';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 /* ───────────────────────── Insights ───────────────────────── */
 
@@ -22,8 +23,8 @@ export function Insights() {
     <section id="insights" className="section border-t">
       <div className="container">
         <BlurFade>
-          <p className="section-label">Insights</p>
-          <h2 className="section-title">Notes from the product floor.</h2>
+          <SceneLabel n="08">Insights</SceneLabel>
+          <SceneTitle text="Notes from the product floor." />
           <p className="section-lead">
             Writing on product ownership, fintech, ERP and data.
             {insights.some((i) => !i.published) && ' Items marked Draft are still in progress.'}
@@ -266,7 +267,7 @@ export function Contact({ hasResume }: { hasResume: boolean }) {
             <div className="relative grid gap-10 p-6 sm:p-10 lg:grid-cols-5 lg:gap-14 lg:p-14">
               <div className="lg:col-span-2">
                 <Lottie src="/lottie/connect.json" className="-ml-2 h-14 w-14" />
-                <p className="section-label mt-4">Contact</p>
+                <div className="mt-4"><SceneLabel n="09">Contact</SceneLabel></div>
                 <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tighter md:text-4xl">Let&apos;s build something impactful together.</h2>
                 <p className="mt-4 text-pretty text-muted-foreground">
                   Hiring for a Business Analyst, Product Owner or Product Manager role in fintech, ERP/WMS or AI-driven products? I&apos;d like to hear about it.

@@ -9,6 +9,7 @@ import { NumberTicker } from '@/components/magicui/number-ticker';
 import { BeamFlow } from '@/components/magicui/animated-beam';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const m = (label: string) => metrics.find((x) => x.label === label)!;
 
@@ -61,10 +62,8 @@ export function Impact() {
       <div className="container">
         <BlurFade className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="section-label">Impact</p>
-            <h2 id="impact-title" className="section-title">
-              Outcomes, not just output.
-            </h2>
+            <SceneLabel n="02">Impact</SceneLabel>
+            <SceneTitle id="impact-title" text="Outcomes, not just output." />
           </div>
           <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
