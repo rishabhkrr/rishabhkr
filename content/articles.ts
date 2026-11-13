@@ -1,7 +1,7 @@
 /**
  * Long-form Insights articles. An article is only built and linked when its
  * matching entry in `insights` (content/site.ts) has `published: true`.
- * Both articles below are DRAFTS for Rishabh to review and edit before publishing.
+ * Both articles below were reviewed and approved by Rishabh (Nov 2026).
  */
 
 export type ArticleBlock = { type: 'p'; text: string } | { type: 'h2'; text: string } | { type: 'ul'; items: string[] } | { type: 'code'; text: string };

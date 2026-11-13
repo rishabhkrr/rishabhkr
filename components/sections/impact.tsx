@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Briefcase, CheckCircle2, FileText, Layers, ScanLine, Sparkles, Target, Receipt } from 'lucide-react';
+import { Award, Briefcase, CheckCircle2, FileText, Gauge, Layers, ScanLine, Sparkles, Receipt } from 'lucide-react';
 import { metrics } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { BorderBeam } from '@/components/magicui/border-beam';
@@ -47,13 +47,14 @@ function Bars() {
 }
 
 export function Impact() {
-  const capture = m('Remittance capture accuracy');
-  const cost = m('Operational cost reduction');
-  const matching = m('Matching automation improvement');
+  const capture = m('Data accuracy');
+  const cost = m('Cost reduction');
+  const faster = m('Faster processing');
+  const velocity = m('Sprint velocity improvement');
   const years = m('Years of experience');
   const projects = m('Projects delivered');
   const certs = m('Certifications completed');
-  const tat = m('Turnaround time reduction');
+  const audit = m('AR audit cycle time reduction');
 
   return (
     <section id="impact" aria-labelledby="impact-title" className="section pt-8 md:pt-12">
@@ -67,10 +68,7 @@ export function Impact() {
           </div>
           <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-success" /> Delivered — reported results
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-warning" /> Target — goal for ongoing work
+              <span className="h-2 w-2 rounded-full bg-success" /> Delivered results at FIS Global, 2021–2025
             </span>
           </div>
         </BlurFade>
@@ -88,7 +86,7 @@ export function Impact() {
             <p className="mt-6 text-6xl font-semibold tracking-tighter md:text-7xl">
               <NumberTicker value={capture.value} suffix="%" />
             </p>
-            <p className="mt-1 text-muted-foreground">remittance capture accuracy</p>
+            <p className="mt-1 text-muted-foreground">data accuracy after migrating legacy OCR to AWS Textract</p>
             <div className="mt-8">
               <Bars />
               <p className="mt-2 text-right font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Illustrative trend</p>
@@ -111,7 +109,7 @@ export function Impact() {
             <p className="mt-1 text-sm text-muted-foreground">projects delivered</p>
           </Tile>
 
-          <Tile className="md:col-span-3" delay={0.05}>
+          <Tile className="md:col-span-2" delay={0.05}>
             <div className="flex items-center justify-between">
               <Receipt className="h-5 w-5 text-muted-foreground" />
               <Delivered compact />
@@ -119,34 +117,43 @@ export function Impact() {
             <p className="mt-5 text-4xl font-semibold tracking-tighter sm:mt-6 sm:text-5xl">
               <NumberTicker value={cost.value} suffix="%" />
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">operational cost reduction</p>
+            <p className="mt-1 text-sm text-muted-foreground">cost reduction · Cash App</p>
           </Tile>
 
-          <Tile className="md:col-span-3" delay={0.1}>
+          <Tile className="md:col-span-2" delay={0.1}>
             <div className="flex items-center justify-between">
               <FileText className="h-5 w-5 text-muted-foreground" />
               <Delivered compact />
             </div>
             <p className="mt-5 text-4xl font-semibold tracking-tighter sm:mt-6 sm:text-5xl">
-              <NumberTicker value={matching.value} suffix="%" />
+              <NumberTicker value={faster.value} suffix="%" />
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">matching automation improvement</p>
+            <p className="mt-1 text-sm text-muted-foreground">faster processing · Cash App</p>
+          </Tile>
+
+          <Tile className="col-span-2 md:col-span-2" delay={0.15}>
+            <div className="flex items-center justify-between">
+              <Gauge className="h-5 w-5 text-muted-foreground" />
+              <Delivered compact />
+            </div>
+            <p className="mt-5 text-4xl font-semibold tracking-tighter sm:mt-6 sm:text-5xl">
+              <NumberTicker value={velocity.value} suffix="%" />
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">sprint velocity improvement</p>
           </Tile>
 
           <Tile className="col-span-2 md:col-span-4" delay={0.05}>
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Sparkles className="h-4 w-4" /> AI AutoMatch · ongoing
+                <Sparkles className="h-4 w-4" /> AI AutoMatch Remittance Module
               </div>
-              <Badge variant="warning">
-                <Target className="h-3 w-3" /> Target
-              </Badge>
+              <Delivered />
             </div>
             <div className="mt-5 flex flex-wrap items-end gap-x-4 gap-y-1">
               <p className="text-5xl font-semibold tracking-tighter">
-                <NumberTicker value={tat.value} valueTo={tat.valueTo} suffix="%" />
+                <NumberTicker value={audit.value} suffix="%" />
               </p>
-              <p className="pb-1.5 text-sm text-muted-foreground">reduction in turnaround time</p>
+              <p className="pb-1.5 text-sm text-muted-foreground">reduction in AR audit cycle time · 40–50% accuracy uplift</p>
             </div>
             <BeamFlow
               className="mt-8"

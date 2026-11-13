@@ -1,10 +1,9 @@
 /**
  * Central, editable profile content.
  *
- * Anything marked `VERIFY` came from older public material (the 2020 portfolio
- * in this repo's history) or from the brief, and should be confirmed before
- * going live. Leave a value `undefined` to hide it — the UI never renders
- * placeholders for missing facts.
+ * Facts here were confirmed by Rishabh or taken from his resume (Nov 2026).
+ * Leave a value `undefined` to hide it — the UI never renders placeholders
+ * for missing facts.
  */
 
 export const profile = {
@@ -34,9 +33,9 @@ export const profile = {
 };
 
 export const links = {
-  // VERIFY: taken from the 2020 portfolio. Replace with your current professional address.
-  email: 'rishabh.kumar140298@gmail.com' as string | undefined,
-  // VERIFY: taken from the 2020 portfolio.
+  // Confirmed by Rishabh (Nov 2026). Note: the resume PDF lists imrishabhkr14@gmail.com.
+  email: 'imrishabhkr07@gmail.com' as string | undefined,
+  // Confirmed by Rishabh (Nov 2026).
   linkedin: 'https://www.linkedin.com/in/rishabh-kumar-ba2099193/' as string | undefined,
   github: 'https://github.com/rishabhkrr' as string | undefined,
   /** Drop a PDF at public/resume.pdf — the download buttons appear automatically. */
@@ -59,14 +58,16 @@ export type Metric = {
   valueTo?: number;
 };
 
+// Figures from Rishabh's resume (Nov 2026).
 export const metrics: Metric[] = [
   { value: 5, suffix: '+', label: 'Years of experience', kind: 'profile' },
   { value: 20, suffix: '+', label: 'Projects delivered', kind: 'profile' },
-  { value: 2, suffix: '', label: 'Certifications completed', kind: 'profile', context: '2 more in progress' },
-  { value: 75, suffix: '%', label: 'Remittance capture accuracy', kind: 'delivered', context: 'Cash App Relaunch' },
-  { value: 30, suffix: '%', label: 'Operational cost reduction', kind: 'delivered', context: 'Cash App Relaunch' },
-  { value: 25, suffix: '%', label: 'Matching automation improvement', kind: 'delivered', context: 'Cash App Relaunch' },
-  { value: 40, valueTo: 50, suffix: '%', label: 'Turnaround time reduction', kind: 'target', context: 'AI AutoMatch — ongoing' },
+  { value: 3, suffix: '', label: 'Certifications completed', kind: 'profile', context: 'AI Product Management in progress' },
+  { value: 75, suffix: '%', label: 'Data accuracy', kind: 'delivered', context: 'Cash App Relaunch · AWS Textract' },
+  { value: 30, suffix: '%', label: 'Cost reduction', kind: 'delivered', context: 'Cash App Relaunch' },
+  { value: 25, suffix: '%', label: 'Faster processing', kind: 'delivered', context: 'Cash App Relaunch' },
+  { value: 50, suffix: '%', label: 'AR audit cycle time reduction', kind: 'delivered', context: 'AI AutoMatch' },
+  { value: 35, suffix: '%', label: 'Sprint velocity improvement', kind: 'delivered', context: 'FIS Global' },
 ];
 
 export type Experience = {
@@ -74,7 +75,7 @@ export type Experience = {
   company: string;
   domain: string;
   roles: string[];
-  /** VERIFY: add exact dates from your resume, e.g. 'Mar 2022 — Present'. Hidden while undefined. */
+  /** Hidden while undefined. */
   period?: string;
   summary: string;
   focus: { title: string; items: string[] }[];
@@ -82,58 +83,72 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    id: 'fis',
-    company: 'FIS Global',
-    domain: 'Fintech · Accounts Receivable',
-    roles: ['Business Analyst', 'Product Owner', 'Scrum Master'],
+    id: 'gemba',
+    company: 'Gemba Concepts',
+    domain: 'Manufacturing ERP · Bengaluru',
+    roles: ['Product Owner', 'Business Analyst'],
+    period: 'Dec 2025 — Present',
     summary:
-      'Owned requirements and delivery for the Accounts Receivable cash module — from remittance capture through cash application — working across business stakeholders, engineering and AI/ML teams.',
+      'Owning requirements and delivery for manufacturing ERP products — from business process workshops and as-is / to-be mapping through UAT sign-off — as the primary liaison between client leadership, procurement, warehouse and development.',
     focus: [
       {
-        title: 'Product & domain',
+        title: 'Requirements & ownership',
         items: [
-          'Accounts Receivable domain and the Cash module',
-          'Cash Application and remittance processing',
-          'Exception handling workflows',
+          'Led requirements elicitation across 12+ ERP modules',
+          'Authored a 25,000+ line BRD / FRD / FSD suite with RTM, swimlanes, use cases and RACI',
+          'Maintained the product backlog in JIRA with MoSCoW prioritisation',
         ],
       },
       {
-        title: 'Delivery',
+        title: 'Modules designed',
         items: [
-          'Product roadmap and requirement management',
-          'Agile delivery as Product Owner and Scrum Master',
-          'Stakeholder collaboration across business and engineering',
+          'QC & Compliance: audit workflows, inspection checkpoints, audit-trail logic across Procurement, Production and Inbound QC',
+          'Bin-level WMS: 3 warehouses, 67 racks, 2,500+ bins with full inventory traceability',
+          'Material Tracking System: traceability workflows and validation rules',
         ],
       },
       {
-        title: 'Transformation',
+        title: 'Quality & delivery',
         items: [
-          'Migration of remittance capture to AWS Textract OCR',
-          'Automation improvements in remittance-to-invoice matching',
-          'Collaboration with AI/ML teams on intelligent remittance capture',
+          'Test plans, SIT, regression and UAT sign-off across 12 surfaces; triaged 100+ defects',
+          'Sprint planning, reviews and retrospectives across 2 parallel ERP tracks',
+          'Root cause analysis and change requests for complex mid-sprint incidents',
         ],
       },
     ],
   },
   {
-    id: 'gemba',
-    company: 'Gemba Concepts',
-    domain: 'Enterprise Software · ERP',
-    roles: ['Business Analyst', 'ERP Product Professional'],
+    id: 'fis',
+    company: 'FIS Global',
+    domain: 'Fintech · Accounts Receivable · Pune / Remote',
+    roles: ['Product Owner'],
+    period: 'Jun 2021 — Sep 2025',
     summary:
-      'Drove ERP implementation for manufacturing clients across order, warehouse, procurement and production modules — translating shop-floor operations into system requirements.',
+      'Product Owner for Cash Application and Accounts Receivable — leading the AWS Textract relaunch of remittance capture and the AI AutoMatch remittance module, from discovery to zero-downtime production releases.',
     focus: [
       {
-        title: 'Modules',
-        items: ['ERP implementation', 'OMS and WMS', 'Procurement, production and inventory management'],
+        title: 'Products',
+        items: [
+          'Cash App relaunch: legacy OCR → event-driven AWS Textract pipeline (75% data accuracy, 30% cost reduction, 25% faster processing)',
+          'AI AutoMatch: AI/ML matching with audit validation rules (50% reduction in AR audit cycle time)',
+          'Power BI and SQL exception monitoring for audit KPIs and executive reporting',
+        ],
       },
       {
-        title: 'Analysis',
-        items: ['Business process mapping', 'Requirements gathering', 'Gap analysis against client operations'],
+        title: 'Controls & quality',
+        items: [
+          'Internal control and data-quality requirements for auditable, source-traceable outputs',
+          'UAT execution and regression testing across 6 release cycles',
+          'Root cause analysis on complex matching edge cases',
+        ],
       },
       {
-        title: 'Client delivery',
-        items: ['Client coordination', 'System enhancements', 'Implementation and rollout support'],
+        title: 'Agile delivery',
+        items: [
+          'Backlog grooming, story points, definition of done, OKR alignment and release planning',
+          'Improved sprint velocity by 35%, partnering with the Scrum Master on ceremonies',
+          'Product analytics with A/B testing, Mixpanel and Amplitude',
+        ],
       },
     ],
   },
@@ -195,10 +210,10 @@ export type Certification = {
 };
 
 export const certifications: Certification[] = [
-  { name: 'SAFe Product Owner / Product Manager', provider: 'Scaled Agile, Inc.', status: 'completed' },
-  { name: 'Google Data Analytics Professional Certificate', provider: 'Google', status: 'completed' },
+  { name: 'SAFe® 5 Product Owner / Product Manager', provider: 'Scaled Agile', status: 'completed' },
+  { name: 'Google Project Management Certificate', provider: 'Google · Coursera', status: 'completed' },
+  { name: 'Google Data Analytics Certificate', provider: 'Google · Coursera', status: 'completed' },
   { name: 'AI Product Management', status: 'in-progress' },
-  { name: 'Project Management', status: 'in-progress' },
 ];
 
 export type Insight = {
@@ -213,10 +228,10 @@ export type Insight = {
 
 export const insights: Insight[] = [
   { slug: 'product-ownership-in-fintech', topic: 'Product', title: 'Product Ownership in Fintech', excerpt: 'Balancing regulatory constraints, legacy systems and user value when owning a financial product backlog.', published: false },
-  { slug: 'ai-in-accounts-receivable', topic: 'AI', title: 'AI in Accounts Receivable', excerpt: 'Where machine learning genuinely helps cash application — and where rules still win.', published: false },
+  { slug: 'ai-in-accounts-receivable', topic: 'AI', title: 'AI in Accounts Receivable', excerpt: 'Where machine learning genuinely helps cash application — and where rules still win.', published: true },
   { slug: 'erp-implementation-field-notes', topic: 'ERP', title: 'ERP Implementation: Field Notes', excerpt: 'What shop-floor reality teaches you that a requirements template never will.', published: false },
   { slug: 'wms-process-automation', topic: 'WMS', title: 'WMS Process Automation', excerpt: 'From GRN to picklist: finding the automation wins hiding in warehouse workflows.', published: false },
-  { slug: 'sql-for-business-analysts', topic: 'Data', title: 'SQL for Business Analysts', excerpt: 'The handful of query patterns that make a BA self-sufficient with data.', published: false },
+  { slug: 'sql-for-business-analysts', topic: 'Data', title: 'SQL for Business Analysts', excerpt: 'The handful of query patterns that make a BA self-sufficient with data.', published: true },
   { slug: 'building-data-driven-products', topic: 'Product', title: 'Building Data-Driven Products', excerpt: 'Instrumenting decisions, not just dashboards.', published: false },
 ];
 

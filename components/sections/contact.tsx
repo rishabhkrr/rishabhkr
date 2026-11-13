@@ -24,7 +24,10 @@ export function Insights() {
         <BlurFade>
           <p className="section-label">Insights</p>
           <h2 className="section-title">Notes from the product floor.</h2>
-          <p className="section-lead">Writing in progress on product ownership, fintech, ERP and data. These are unpublished drafts — previews only.</p>
+          <p className="section-lead">
+            Writing on product ownership, fintech, ERP and data.
+            {insights.some((i) => !i.published) && ' Items marked Draft are still in progress.'}
+          </p>
         </BlurFade>
         <BlurFade>
         <ul className="mt-10 divide-y border-y">
