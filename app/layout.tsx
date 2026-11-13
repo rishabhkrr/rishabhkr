@@ -10,6 +10,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Intro } from '@/components/cinematic/intro';
 import { introInitScript } from '@/lib/intro';
 import { Atmosphere } from '@/components/cinematic/atmosphere';
+import { RevealObserver } from '@/components/cinematic/reveal-observer';
 
 const title = 'Rishabh Kumar | Senior Business Analyst & Product Owner | Fintech, ERP & AI';
 const description =
@@ -94,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main">{children}</main>
         </SmoothScroll>
         <Atmosphere />
+        <RevealObserver />
         {onVercel && <Analytics />}
       </body>
     </html>

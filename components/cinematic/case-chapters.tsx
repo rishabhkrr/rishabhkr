@@ -23,7 +23,7 @@ function Chapter({ s, i, total, onOpen, pinned }: { s: CaseStudy; i: number; tot
     >
       <div className={cn('lg:col-span-6', pinned && 'pl-[max(1.25rem,calc((100vw-1200px)/2+1.25rem))]')}>
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          Chapter {s.index} <span className="text-foreground/30">/ {String(total).padStart(2, '0')}</span>
+          Chapter {s.index} <span className="text-muted-foreground">/ {String(total).padStart(2, '0')}</span>
         </p>
         <h3 data-ch-title className="mt-4 text-balance text-4xl font-semibold leading-[1] tracking-tighter md:text-6xl">
           {s.title}

@@ -1,5 +1,3 @@
-'use client';
-
 import { experience } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';

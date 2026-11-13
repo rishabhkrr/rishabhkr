@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { Award, Briefcase, CheckCircle2, FileText, Gauge, Layers, ScanLine, Sparkles, Receipt } from 'lucide-react';
 import { metrics } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
@@ -32,18 +29,16 @@ function Delivered({ compact = false }: { compact?: boolean }) {
   );
 }
 
+/** Bars grow when the tile is revealed (CSS; see .bar in globals.css). */
 function Bars() {
   const data = [28, 34, 31, 42, 47, 55, 61, 68, 75];
   return (
     <div className="flex h-28 items-end gap-1.5" aria-hidden>
       {data.map((h, i) => (
-        <motion.div
+        <div
           key={i}
-          className={cn('flex-1 rounded-t-md', i === data.length - 1 ? 'bg-foreground' : 'bg-foreground/15')}
-          initial={{ height: 0 }}
-          whileInView={{ height: `${h}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+          className={cn('bar flex-1 rounded-t-md', i === data.length - 1 ? 'bg-foreground' : 'bg-foreground/15')}
+          style={{ height: `${h}%`, '--i': i } as React.CSSProperties}
         />
       ))}
     </div>
