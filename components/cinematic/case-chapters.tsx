@@ -88,24 +88,40 @@ export function CaseChapters({ studies, onOpen }: { studies: CaseStudy[]; onOpen
         const frames = gsap.utils.toArray<HTMLElement>('[data-chapter]', el);
         gsap.set(frames, { autoAlpha: 0 });
         gsap.set(frames[0], { autoAlpha: 1 });
-        const tl = gsap.timeline({
-          defaults: { ease: 'power2.inOut' },
-          scrollTrigger: {
-            trigger: el,
-            pin: true,
-            start: 'top top',
-            end: () => `+=${window.innerHeight * (frames.length - 1) * 1.1}`,
-            scrub: 0.8,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => setActive(Math.min(frames.length - 1, Math.round(self.progress * (frames.length - 1)))),
-          },
-        });
+        // Each chapter holds sharp for a beat, then a short cross-cut to the next.
+        const HOLD = 1;
+        const CUT = 0.6;
+        const starts: number[] = [];
+        const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
         frames.forEach((frame, i) => {
-          if (i === 0) return;
-          const prev = frames[i - 1];
-          tl.to(prev, { autoAlpha: 0, scale: 0.94, filter: 'blur(8px)', duration: 1 })
-            .fromTo(frame, { autoAlpha: 0, scale: 1.06, filter: 'blur(8px)' }, { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 1 }, '<0.35')
-            .fromTo(frame.querySelector('[data-ch-visual]'), { scale: 1.15 }, { scale: 1, duration: 1.4 }, '<');
+          if (i === 0) {
+            starts.push(0);
+          } else {
+            const prev = frames[i - 1];
+            tl.to(prev, { autoAlpha: 0, scale: 0.97, filter: 'blur(4px)', duration: CUT })
+              .fromTo(frame, { autoAlpha: 0, scale: 1.03, filter: 'blur(4px)' }, { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: CUT }, '<0.15');
+            // The chapter counts as "current" from the midpoint of its cut-in.
+            starts.push(tl.duration() - CUT / 2);
+            tl.fromTo(frame.querySelector('[data-ch-visual]'), { scale: 1.08 }, { scale: 1, duration: CUT + HOLD * 0.6, ease: 'power1.out' }, '<');
+          }
+          tl.to({}, { duration: HOLD });
+        });
+        ScrollTrigger.create({
+          animation: tl,
+          trigger: el,
+          pin: true,
+          start: 'top top',
+          end: () => `+=${window.innerHeight * frames.length * 0.9}`,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const t = self.progress * tl.duration();
+            let idx = 0;
+            starts.forEach((st, i) => {
+              if (t >= st) idx = i;
+            });
+            setActive(idx);
+          },
         });
       }, el);
       ScrollTrigger.refresh();

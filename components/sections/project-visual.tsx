@@ -7,7 +7,7 @@ export function ProjectVisual({ kind, size = 'md' }: { kind: CaseStudy['visual']
   return (
     <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-muted/40 p-6">
       <DotPattern className="[mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" gap={16} />
-      <div className={`relative w-full max-w-sm transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02] ${size === 'lg' ? 'origin-center scale-[1.35] lg:scale-[1.6]' : ''}`}>
+      <div className={`relative w-full max-w-sm transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-[1.02] ${size === 'lg' ? 'origin-center scale-110 lg:scale-[1.3]' : ''}`}>
         {kind === 'ocr' && <Ocr />}
         {kind === 'ai' && <Ai />}
         {kind === 'erp' && <Erp />}
