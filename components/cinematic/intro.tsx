@@ -37,7 +37,7 @@ export function Intro() {
     try {
       sessionStorage.setItem(INTRO_KEY, '1');
     } catch {}
-    document.documentElement.classList.add('intro-done');
+    document.documentElement.classList.add('intro-played', 'intro-done');
     window.dispatchEvent(new Event(INTRO_DONE_EVENT));
     setGone(true);
   }, []);

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 /**
@@ -9,6 +9,16 @@ import { cn } from '@/lib/utils';
  * reduced motion (via MotionConfig) get a flat, static card.
  */
 export function TiltCard({ children, className, max = 7 }: { children: React.ReactNode; className?: string; max?: number }) {
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    setEnabled(window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches);
+  }, []);
+  // Touch / reduced motion: a plain wrapper — no springs, no 3D layers.
+  if (!enabled) return <div className={className}>{children}</div>;
+  return <Tilt3D className={className} max={max}>{children}</Tilt3D>;
+}
+
+function Tilt3D({ children, className, max }: { children: React.ReactNode; className?: string; max: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);

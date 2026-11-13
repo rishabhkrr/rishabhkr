@@ -139,6 +139,13 @@
 html.intro-done [data-intro] {
   display: none;
 }
+/* No opening titles this visit (returning, phone, reduced motion): paint the hero immediately
+   instead of waiting for hydration to run its entrance — keeps LCP fast. */
+html.intro-done:not(.intro-played) [data-hero-anim] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
 
 .film-grain {
   opacity: 0.06;

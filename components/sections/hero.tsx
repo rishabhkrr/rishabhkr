@@ -68,6 +68,7 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
   };
 
   const enter = (delay: number) => ({
+    'data-hero-anim': true,
     initial: { opacity: 0, y: 24, filter: 'blur(8px)' },
     animate: introDone ? { opacity: 1, y: 0, filter: 'blur(0px)' } : undefined,
     transition: { duration: 1, delay, ease: [0.16, 1, 0.3, 1] as const },
@@ -105,6 +106,7 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
           <span className="sr-only">{profile.name} — Business Analyst &amp; Product Owner</span>
           <span aria-hidden className="block overflow-hidden pb-[0.08em]">
             <motion.span
+              data-hero-anim
               className="text-gradient inline-block"
               initial={{ y: '105%' }}
               animate={introDone ? { y: '0%' } : undefined}
@@ -115,6 +117,7 @@ export function Hero({ hasResume }: { hasResume: boolean }) {
           </span>
           <span aria-hidden className="block overflow-hidden pb-[0.08em]">
             <motion.span
+              data-hero-anim
               className="text-gradient inline-block"
               initial={{ y: '105%' }}
               animate={introDone ? { y: '0%' } : undefined}
