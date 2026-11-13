@@ -2,7 +2,7 @@
 
 Personal portfolio for a Product-Focused Business Analyst & Product Owner (Fintech · ERP/WMS · AI automation).
 
-**Stack:** Next.js 14 (App Router, static export) · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion · GSAP ScrollTrigger · Lenis · Lottie · Geist · Lucide icons
+**Stack:** Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion · GSAP ScrollTrigger · Lenis · Lottie · three.js · Geist · Lucide icons
 
 ## Quick start
 
@@ -115,7 +115,7 @@ The site is served from `/rishabhkr`, so build with `BASE_PATH=/rishabhkr`. The 
 | `NEXT_PUBLIC_FORMSPREE_ID` | No       | Enables direct form submission.                                                               |
 | `BASE_PATH`                | No       | Sub-path hosting, e.g. `/rishabhkr` on GitHub Pages.                                          |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No | Google Search Console token (HTML-tag method). |
-| `NEXT_DIST_DIR`            | No       | Build into another folder, e.g. `.next-verify`, without touching a running dev server. Export output then lands in that folder instead of `out/`. |
+| `NEXT_DIST_DIR`            | No       | Build into another folder, e.g. `.next-verify`; export output then lands there instead of `out/`. Note: a running dev server still needs a restart after a build. |
 
 Vercel Analytics is enabled automatically on Vercel builds (`VERCEL=1`) and is off everywhere else.
 

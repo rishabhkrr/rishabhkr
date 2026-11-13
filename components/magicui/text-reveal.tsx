@@ -24,7 +24,7 @@ export function TextReveal({ text, className }: { text: string; className?: stri
       ctx = gsap.context(() => {
         gsap.fromTo(
           el.querySelectorAll('[data-word]'),
-          { opacity: 0.15 },
+          { opacity: 0.35 }, // ≥3:1 contrast for large text even before reveal
           { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: 0.5 } }
         );
       }, el);

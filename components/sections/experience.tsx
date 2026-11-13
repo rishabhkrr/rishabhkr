@@ -1,9 +1,8 @@
-'use client';
-
 import { experience } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const initials = (s: string) =>
   s
@@ -17,8 +16,8 @@ export function Experience() {
     <section id="experience" className="section border-y bg-muted/30">
       <div className="container">
         <BlurFade>
-          <p className="section-label">Experience</p>
-          <h2 className="section-title">Two domains. One way of working.</h2>
+          <SceneLabel n="04">Experience</SceneLabel>
+          <SceneTitle text="Two domains. One way of working." />
           <p className="section-lead">Fintech taught me rigour with money and data; ERP taught me how physical operations really run.</p>
         </BlurFade>
 

@@ -33,8 +33,8 @@ export const profile = {
 };
 
 export const links = {
-  // Confirmed by Rishabh (Nov 2026). Note: the resume PDF lists imrishabhkr14@gmail.com.
-  email: 'imrishabhkr07@gmail.com' as string | undefined,
+  // Confirmed by Rishabh (Nov 2026); matches the resume.
+  email: 'imrishabhkr14@gmail.com' as string | undefined,
   // Confirmed by Rishabh (Nov 2026).
   linkedin: 'https://www.linkedin.com/in/rishabh-kumar-ba2099193/' as string | undefined,
   github: 'https://github.com/rishabhkrr' as string | undefined,

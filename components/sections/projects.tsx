@@ -6,15 +6,13 @@ import { caseStudies, type CaseStudy, type Outcome } from '@/content/case-studie
 import { projects as builds } from '@/content/projects';
 import { useLenis } from '@/components/animations/SmoothScroll';
 import { BlurFade } from '@/components/magicui/blur-fade';
-import { BorderBeam } from '@/components/magicui/border-beam';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { ProjectVisual } from './project-visual';
-
-const spans = ['md:col-span-4', 'md:col-span-2', 'md:col-span-3', 'md:col-span-3'];
+import { CaseChapters } from '@/components/cinematic/case-chapters';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 function StatusBadge({ status }: { status: CaseStudy['status'] }) {
   return status === 'Ongoing' ? <Badge variant="warning">Ongoing</Badge> : <Badge variant="secondary">{status}</Badge>;
@@ -184,58 +182,20 @@ export function Projects() {
     <section id="projects" className="section">
       <div className="container">
         <BlurFade>
-          <p className="section-label">Featured work</p>
-          <h2 className="section-title">Products shaped end to end.</h2>
+          <SceneLabel n="05">Featured work</SceneLabel>
+          <SceneTitle text="Products shaped end to end." />
           <p className="section-lead">Four case studies across fintech, AI, enterprise systems and analytics. Open any card for the full story.</p>
         </BlurFade>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-6">
-          {caseStudies.map((s, i) => {
-            const headline = s.outcomes.filter((o) => o.value).slice(0, 2);
-            return (
-              <BlurFade key={s.id} delay={i * 0.06} className={spans[i]}>
-                <button
-                  type="button"
-                  onClick={() => setOpenIdx(i)}
-                  aria-haspopup="dialog"
-                  className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border bg-card text-left transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {i === 0 && <BorderBeam size={200} duration={16} />}
-                  <div className="h-52 border-b md:h-60">
-                    <ProjectVisual kind={s.visual} />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="font-mono text-xs text-muted-foreground">
-                        {s.index} · {s.domain}
-                      </span>
-                      <StatusBadge status={s.status} />
-                    </div>
-                    <h3 className="mt-3 text-xl font-semibold tracking-tight">{s.title}</h3>
-                    <p className="mt-1.5 text-pretty text-sm text-muted-foreground">{s.tagline}</p>
-                    {headline.length > 0 && (
-                      <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
-                        {headline.map((o) => (
-                          <div key={o.label}>
-                            <p className="text-2xl font-semibold tracking-tighter">
-                              {o.value}
-                              {o.kind === 'target' && <span className="ml-1.5 align-middle text-[10px] font-medium uppercase tracking-wider text-warning">target</span>}
-                            </p>
-                            <p className="max-w-[18ch] text-xs text-muted-foreground">{o.label}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <span className="mt-auto inline-flex items-center gap-1 pt-6 text-sm font-medium">
-                      Read case study <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </button>
-              </BlurFade>
-            );
-          })}
-        </div>
-        <p className="mt-4 text-xs text-muted-foreground">Visuals are conceptual illustrations. No client names, proprietary data or production screenshots are shown.</p>
+      </div>
+
+      {/* Case studies as film chapters (pinned on desktop, stacked frames elsewhere). */}
+      <div className="mt-12">
+        <CaseChapters studies={caseStudies} onOpen={setOpenIdx} />
+      </div>
+
+      <div className="container">
+        <p className="mt-6 text-xs text-muted-foreground">Visuals are conceptual illustrations. No client names, proprietary data or production screenshots are shown.</p>
 
         {/* Side builds */}
         <BlurFade className="mt-20">

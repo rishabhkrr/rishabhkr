@@ -131,7 +131,90 @@
   }
 }
 
+/* ───────── Scroll reveals (CSS; toggled by RevealObserver) ───────── */
+html.js .reveal[data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(6px);
+  transition: opacity 0.6s ease-out var(--reveal-delay, 0s), transform 0.6s ease-out var(--reveal-delay, 0s),
+    filter 0.6s ease-out var(--reveal-delay, 0s);
+}
+html.js .reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+html.js .reveal .bar {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) calc(0.1s + var(--i, 0) * 50ms);
+}
+html.js .reveal.is-revealed .bar {
+  transform: none;
+}
+html.js .scene-title .scene-word {
+  transform: translateY(110%) rotate(4deg);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i, 0) * 60ms);
+}
+html.js .scene-title.is-revealed .scene-word {
+  transform: none;
+}
 @media (prefers-reduced-motion: reduce) {
+  html.js .reveal[data-reveal],
+  html.js .reveal .bar,
+  html.js .scene-title .scene-word {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ───────── Cinematic atmosphere ───────── */
+@keyframes scrollcue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(300%); }
+}
+html.intro-done [data-intro] {
+  display: none;
+}
+/* No opening titles this visit (returning, phone, reduced motion): paint the hero immediately
+   instead of waiting for hydration to run its entrance — keeps LCP fast. */
+html.intro-done:not(.intro-played) [data-hero-anim] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.film-grain {
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+  mix-blend-mode: overlay;
+}
+:root:not(.dark) .film-grain {
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+.film-vignette {
+  background: radial-gradient(ellipse 120% 90% at 50% 45%, transparent 55%, hsl(0 0% 0% / 0.45) 100%);
+}
+:root:not(.dark) .film-vignette {
+  background: radial-gradient(ellipse 120% 90% at 50% 45%, transparent 60%, hsl(240 10% 4% / 0.08) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-grain {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {

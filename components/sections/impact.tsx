@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { Award, Briefcase, CheckCircle2, FileText, Gauge, Layers, ScanLine, Sparkles, Receipt } from 'lucide-react';
 import { metrics } from '@/content/site';
 import { BlurFade } from '@/components/magicui/blur-fade';
@@ -9,37 +6,39 @@ import { NumberTicker } from '@/components/magicui/number-ticker';
 import { BeamFlow } from '@/components/magicui/animated-beam';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { TiltCard } from '@/components/cinematic/tilt-card';
+import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const m = (label: string) => metrics.find((x) => x.label === label)!;
 
 function Tile({ className, children, delay = 0 }: { className?: string; children: React.ReactNode; delay?: number }) {
   return (
-    <BlurFade delay={delay} className={cn('relative overflow-hidden rounded-2xl border bg-card p-4 sm:p-6', className)}>
-      {children}
+    <BlurFade delay={delay} className={className}>
+      <TiltCard className="h-full" max={5}>
+        <div className="relative h-full overflow-hidden rounded-2xl border bg-card p-4 sm:p-6">{children}</div>
+      </TiltCard>
     </BlurFade>
   );
 }
 
 function Delivered({ compact = false }: { compact?: boolean }) {
   return (
-    <Badge variant="success" aria-label="Delivered">
-      <CheckCircle2 className="h-3 w-3" /> <span className={compact ? 'hidden sm:inline' : ''}>Delivered</span>
+    <Badge variant="success">
+      <CheckCircle2 className="h-3 w-3" aria-hidden /> <span className={compact ? 'sr-only sm:not-sr-only' : ''}>Delivered</span>
     </Badge>
   );
 }
 
+/** Bars grow when the tile is revealed (CSS; see .bar in globals.css). */
 function Bars() {
   const data = [28, 34, 31, 42, 47, 55, 61, 68, 75];
   return (
     <div className="flex h-28 items-end gap-1.5" aria-hidden>
       {data.map((h, i) => (
-        <motion.div
+        <div
           key={i}
-          className={cn('flex-1 rounded-t-md', i === data.length - 1 ? 'bg-foreground' : 'bg-foreground/15')}
-          initial={{ height: 0 }}
-          whileInView={{ height: `${h}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+          className={cn('bar flex-1 rounded-t-md', i === data.length - 1 ? 'bg-foreground' : 'bg-foreground/15')}
+          style={{ height: `${h}%`, '--i': i } as React.CSSProperties}
         />
       ))}
     </div>
@@ -61,10 +60,8 @@ export function Impact() {
       <div className="container">
         <BlurFade className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="section-label">Impact</p>
-            <h2 id="impact-title" className="section-title">
-              Outcomes, not just output.
-            </h2>
+            <SceneLabel n="02">Impact</SceneLabel>
+            <SceneTitle id="impact-title" text="Outcomes, not just output." />
           </div>
           <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
