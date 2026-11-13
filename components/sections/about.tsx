@@ -34,11 +34,11 @@ export function About({ portrait }: { portrait?: string }) {
                 <img
                   src={portrait}
                   alt={`Portrait of ${profile.name}`}
-                  width={720}
-                  height={720}
+                  width={409}
+                  height={512}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-square w-full object-cover grayscale transition-all duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+                  className="aspect-[4/5] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
                 <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 text-white">
