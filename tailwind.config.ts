@@ -1,65 +1,60 @@
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
+
+const hsl = (name: string) => `hsl(var(--${name}) / <alpha-value>)`;
 
 const config: Config = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './content/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  darkMode: 'class',
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './content/**/*.{ts,tsx}'],
   theme: {
+    container: { center: true, padding: '1.25rem', screens: { '2xl': '1200px' } },
     extend: {
       colors: {
-        bg: {
-          DEFAULT: '#09090b',
-          card: 'rgba(24, 24, 27, 0.6)',
-          elevated: 'rgba(39, 39, 42, 0.5)',
-        },
-        text: {
-          primary: '#fafafa',
-          secondary: '#a1a1aa',
-          muted: '#52525b',
-        },
-        accent: {
-          DEFAULT: '#7c5cff',
-          glow: 'rgba(124, 92, 255, 0.15)',
-          secondary: '#06b6d4',
-        },
-        border: {
-          DEFAULT: 'rgba(63, 63, 70, 0.5)',
-          glow: 'rgba(124, 92, 255, 0.3)',
-          subtle: 'rgba(39, 39, 42, 0.5)',
-        },
-      },
-      fontFamily: {
-        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['IBM Plex Mono', 'monospace'],
-      },
-      spacing: {
-        '18': '4.5rem',
-        '22': '5.5rem',
-        '30': '7.5rem',
+        border: hsl('border'),
+        input: hsl('input'),
+        ring: hsl('ring'),
+        background: hsl('background'),
+        foreground: hsl('foreground'),
+        primary: { DEFAULT: hsl('primary'), foreground: hsl('primary-foreground') },
+        secondary: { DEFAULT: hsl('secondary'), foreground: hsl('secondary-foreground') },
+        muted: { DEFAULT: hsl('muted'), foreground: hsl('muted-foreground') },
+        accent: { DEFAULT: hsl('accent'), foreground: hsl('accent-foreground') },
+        destructive: { DEFAULT: hsl('destructive'), foreground: hsl('destructive-foreground') },
+        card: { DEFAULT: hsl('card'), foreground: hsl('card-foreground') },
+        popover: { DEFAULT: hsl('popover'), foreground: hsl('popover-foreground') },
+        success: hsl('success'),
+        warning: hsl('warning'),
       },
       borderRadius: {
-        'sm': '8px',
-        'md': '12px',
-        'lg': '16px',
-        'xl': '24px',
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
-      animation: {
-        'float': 'float 20s ease-in-out infinite',
-        'float-delayed': 'float 25s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      fontFamily: {
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-          '50%': { transform: 'translate(-40px, 30px) scale(1.1)' },
+        'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
+        'accordion-up': { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },
+        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(calc(-100% - var(--gap)))' } },
+        'border-beam': { '100%': { 'offset-distance': '100%' } },
+        'shiny-text': {
+          '0%, 90%, 100%': { 'background-position': 'calc(-100% - var(--shiny-width)) 0' },
+          '30%, 60%': { 'background-position': 'calc(100% + var(--shiny-width)) 0' },
         },
       },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        marquee: 'marquee var(--duration) linear infinite',
+        'border-beam': 'border-beam calc(var(--duration) * 1s) infinite linear',
+        'shiny-text': 'shiny-text 8s infinite',
+      },
+      zIndex: { nav: '50', modal: '90' },
     },
   },
-  plugins: [],
+  plugins: [animate],
 };
 
 export default config;
