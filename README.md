@@ -2,7 +2,7 @@
 
 Personal portfolio for a Product-Focused Business Analyst & Product Owner (Fintech · ERP/WMS · AI automation).
 
-**Stack:** Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion · GSAP ScrollTrigger · Lenis · Lottie · three.js · Geist · Lucide icons
+**Stack:** Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion (desktop tilt only, lazy) · GSAP ScrollTrigger · Lenis · Lottie · three.js · Geist · Lucide icons
 
 ## Quick start
 
@@ -44,7 +44,7 @@ Rules the UI follows:
 
 ### Insights articles
 
-The full text of each article lives in `content/articles.ts`. To publish one, set `published: true` on its matching entry in `insights` (`content/site.ts`). The build then creates `/insights/<slug>` and links to it from the homepage. Two drafts are ready for review: *AI in Accounts Receivable* and *SQL for Business Analysts*.
+The full text of each article lives in `content/articles.ts`. To publish one, set `published: true` on its matching entry in `insights` (`content/site.ts`). The build then creates `/insights/<slug>` and links to it from the homepage. All six articles are currently published.
 
 ### Contact form
 

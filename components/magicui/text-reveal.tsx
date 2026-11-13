@@ -17,7 +17,7 @@ export function TextReveal({ text, className }: { text: string; className?: stri
     let ctx: { revert: () => void } | undefined;
     let cancelled = false;
 
-    (async () => {
+    const start = async () => {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')]);
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
@@ -28,9 +28,21 @@ export function TextReveal({ text, className }: { text: string; className?: stri
           { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: 0.5 } }
         );
       }, el);
-    })();
+    };
+
+    // Fetch GSAP only when the paragraph is about a screen away — keeps it out of the initial load.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        io.disconnect();
+        void start();
+      },
+      { rootMargin: '100% 0px' }
+    );
+    io.observe(el);
 
     return () => {
+      io.disconnect();
       cancelled = true;
       ctx?.revert();
     };

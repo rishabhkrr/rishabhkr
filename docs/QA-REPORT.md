@@ -1,18 +1,29 @@
 # QA Report — Portfolio Redesign (shadcn/ui + Magic UI)
 
-## Latest run — cinematic + Next.js 15.5.28 / React 19 (production build, gzip)
+## Latest run — mobile performance pass (Nov 14, 2026)
+
+Changes:
+- **Hero, navbar and shared UI no longer use Framer Motion.** They now use CSS transitions and small rAF handlers.
+- **Framer Motion loads only for the desktop 3D tilt**, as a lazy chunk.
+- **Lenis loads on demand** and never on touch devices.
+- **GSAP for the text reveal** loads only when the paragraph is near the viewport.
+- **The full-screen film grain is off** on phones and touch devices.
+
+Result: about 55 kB gzip came out of the shared first-load JavaScript.
 
 | Check | Result |
 | ----- | ------ |
 | Type-check, lint, production build | ✅ Pass |
-| Functional QA | ✅ 32/32 (includes cinematic chapters and the case-study dialog) |
-| Responsive QA | ✅ 10 viewports × 2 themes: no horizontal overflow, no console errors |
-| Intro, WebGL hero, pinned chapters | ✅ Render with no errors; chapters stay sharp at 9 of 12 sampled scroll positions |
-| Lighthouse, mobile | Performance 79–88 · Accessibility 100 · Best practices 100 · SEO 100 (observed LCP 0.4–0.9 s) |
-| Lighthouse, desktop | Performance 93 · Accessibility 100 · Best practices 100 · SEO 100 |
-| `npm audit` | No vulnerabilities in production dependencies. 6 moderate findings remain in dev-only lint tooling (typescript-eslint / minimatch). |
+| Functional QA | ✅ 32/32 (production build, and against the live site before this pass) |
+| Responsive QA | ✅ No horizontal overflow, no console errors |
+| Intro, WebGL hero, pinned chapters, desktop tilt, hero scroll exit | ✅ Working, no errors |
+| Lighthouse, mobile (local, 3 runs) | Performance **89 / 90 / 91** · Accessibility 100 · Best practices 100 · SEO 100 · TBT 220–260 ms · CLS 0 |
+| Lighthouse, desktop (local) | Performance **98** · 100 / 100 / 100 |
+| Lighthouse, live site before this pass | Mobile 64–68 (TBT 1.1–2.2 s) · Desktop 96 |
+| `npm audit` | ✅ **0 vulnerabilities** (minimatch in typescript-eslint pinned to 11.0.8 via `overrides`) |
+| Articles | All 6 Insights articles published (`/insights/<slug>`, in sitemap) |
 
-Not executed: real-device testing (emulation only), and a Lighthouse run against the live GitHub Pages URL.
+Not executed: real-device testing (emulation only).
 
 ---
 

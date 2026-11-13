@@ -227,12 +227,12 @@ export type Insight = {
 };
 
 export const insights: Insight[] = [
-  { slug: 'product-ownership-in-fintech', topic: 'Product', title: 'Product Ownership in Fintech', excerpt: 'Balancing regulatory constraints, legacy systems and user value when owning a financial product backlog.', published: false },
+  { slug: 'product-ownership-in-fintech', topic: 'Product', title: 'Product Ownership in Fintech', excerpt: 'Balancing regulatory constraints, legacy systems and user value when owning a financial product backlog.', published: true },
   { slug: 'ai-in-accounts-receivable', topic: 'AI', title: 'AI in Accounts Receivable', excerpt: 'Where machine learning genuinely helps cash application — and where rules still win.', published: true },
-  { slug: 'erp-implementation-field-notes', topic: 'ERP', title: 'ERP Implementation: Field Notes', excerpt: 'What shop-floor reality teaches you that a requirements template never will.', published: false },
-  { slug: 'wms-process-automation', topic: 'WMS', title: 'WMS Process Automation', excerpt: 'From GRN to picklist: finding the automation wins hiding in warehouse workflows.', published: false },
+  { slug: 'erp-implementation-field-notes', topic: 'ERP', title: 'ERP Implementation: Field Notes', excerpt: 'What shop-floor reality teaches you that a requirements template never will.', published: true },
+  { slug: 'wms-process-automation', topic: 'WMS', title: 'WMS Process Automation', excerpt: 'From GRN to picklist: finding the automation wins hiding in warehouse workflows.', published: true },
   { slug: 'sql-for-business-analysts', topic: 'Data', title: 'SQL for Business Analysts', excerpt: 'The handful of query patterns that make a BA self-sufficient with data.', published: true },
-  { slug: 'building-data-driven-products', topic: 'Product', title: 'Building Data-Driven Products', excerpt: 'Instrumenting decisions, not just dashboards.', published: false },
+  { slug: 'building-data-driven-products', topic: 'Product', title: 'Building Data-Driven Products', excerpt: 'Instrumenting decisions, not just dashboards.', published: true },
 ];
 
 export const navItems = [

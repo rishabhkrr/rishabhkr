@@ -1,7 +1,6 @@
 'use client';
 
-import Lenis from 'lenis';
-import { MotionConfig } from 'framer-motion';
+import type Lenis from 'lenis';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const LenisContext = createContext<Lenis | null>(null);
@@ -9,7 +8,7 @@ const LenisContext = createContext<Lenis | null>(null);
 export const useLenis = () => useContext(LenisContext);
 
 /**
- * Lenis smooth scrolling. Skipped entirely for reduced-motion users and on
+ * Lenis smooth scrolling, loaded lazily. Skipped entirely for reduced-motion users and on
  * touch devices, where native momentum scrolling is already good.
  */
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
@@ -20,28 +19,31 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     if (reduce || coarse) return;
 
-    const instance = new Lenis({ duration: 1.1, smoothWheel: true });
+    // Loaded on demand so phones never download it.
+    let instance: Lenis | null = null;
     let frame = 0;
-    const raf = (time: number) => {
-      instance.raf(time);
+    let cancelled = false;
+    import('lenis').then(({ default: LenisCtor }) => {
+      if (cancelled) return;
+      const lenisInstance = new LenisCtor({ duration: 1.1, smoothWheel: true });
+      instance = lenisInstance;
+      const raf = (time: number) => {
+        lenisInstance.raf(time);
+        frame = requestAnimationFrame(raf);
+      };
       frame = requestAnimationFrame(raf);
-    };
-    frame = requestAnimationFrame(raf);
-    setLenis(instance);
+      setLenis(lenisInstance);
+    });
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(frame);
-      instance.destroy();
+      instance?.destroy();
       setLenis(null);
     };
   }, []);
 
-  // reducedMotion="user": transform animations become instant for visitors who prefer reduced motion.
-  return (
-    <LenisContext.Provider value={lenis}>
-      <MotionConfig reducedMotion="user">{children}</MotionConfig>
-    </LenisContext.Provider>
-  );
+  return <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>;
 }
 
 /** Scroll to an in-page section, via Lenis when active. */

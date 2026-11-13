@@ -1,8 +1,7 @@
 /**
  * Long-form Insights articles. An article is only built and linked when its
  * matching entry in `insights` (content/site.ts) has `published: true`.
- * Approved and published: ai-in-accounts-receivable, sql-for-business-analysts.
- * Drafts awaiting Rishabh's review (published: false in site.ts): the other four.
+ * All six articles are published (approved by Rishabh, Nov 2026).
  */
 
 export type ArticleBlock = { type: 'p'; text: string } | { type: 'h2'; text: string } | { type: 'ul'; items: string[] } | { type: 'code'; text: string };
