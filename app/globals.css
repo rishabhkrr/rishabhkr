@@ -177,6 +177,32 @@ html.js .scene-title.is-revealed .scene-word {
 html.intro-done [data-intro] {
   display: none;
 }
+/* Hero entrance — pure CSS. Hidden only when JS runs (html.js); plays once <html> gets `intro-done`
+   (end of the opening titles). Staggered with --d. */
+.hero-light {
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 30%), hsl(var(--foreground) / 0.1), transparent 60%);
+}
+html.js .hero-in {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(8px);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s),
+    filter 1s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s);
+}
+html.js .hero-rise {
+  transform: translateY(105%);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s);
+}
+html.js.intro-done .hero-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+html.js.intro-done .hero-rise {
+  transform: none;
+}
 /* No opening titles this visit (returning, phone, reduced motion): paint the hero immediately
    instead of waiting for hydration to run its entrance — keeps LCP fast. */
 html.intro-done:not(.intro-played) [data-hero-anim] {
@@ -210,6 +236,13 @@ html.intro-done:not(.intro-played) [data-hero-anim] {
   background: radial-gradient(ellipse 120% 90% at 50% 45%, transparent 60%, hsl(240 10% 4% / 0.08) 100%);
 }
 
+/* Phones / touch: the full-screen blended grain layer costs a repaint every step — drop it. */
+@media (max-width: 767px), (pointer: coarse) {
+  .film-grain {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .film-grain {
     animation: none;
@@ -223,4 +256,14 @@ html.intro-done:not(.intro-played) [data-hero-anim] {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* BeamFlow: a beam of light travelling along the track (2.4s run + 0.8s rest). */
+.beam-run {
+  transform: translateX(-25%);
+  animation: beam-run 3.2s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+@keyframes beam-run {
+  0% { transform: translateX(-25%); }
+  75%, 100% { transform: translateX(100%); }
 }

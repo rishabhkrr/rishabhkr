@@ -1,6 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { navItems, profile } from '@/content/site';
@@ -91,11 +90,10 @@ export function Navbar() {
                     onClick={go(item.id)}
                     aria-current={isActive ? 'true' : undefined}
                     className={cn(
-                      'relative isolate block rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                      isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                      'block rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                      isActive ? 'bg-accent text-foreground' : 'text-muted-foreground hover:text-foreground'
                     )}
                   >
-                    {isActive && <motion.span layoutId="nav-active" className="absolute inset-0 -z-10 rounded-full bg-accent" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
                     {item.label}
                   </a>
                 </li>
@@ -124,18 +122,13 @@ export function Navbar() {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
+      {open && (
+          <div
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
             aria-label="Site menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
-            transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-w-5xl rounded-2xl border bg-background/95 p-2 shadow-xl backdrop-blur-xl lg:hidden"
+            className="mx-auto mt-2 duration-200 animate-in fade-in-0 slide-in-from-top-2 max-w-5xl rounded-2xl border bg-background/95 p-2 shadow-xl backdrop-blur-xl lg:hidden"
           >
             <ul className="grid gap-0.5">
               {navItems.map((item) => (
@@ -158,9 +151,8 @@ export function Navbar() {
                 Let&apos;s talk
               </a>
             </Button>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </header>
   );
 }
