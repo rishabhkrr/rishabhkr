@@ -44,7 +44,7 @@ Rules the UI follows:
 
 ### Insights articles
 
-The full text of each article lives in `content/articles.ts`. To publish one, set `published: true` on its matching entry in `insights` (`content/site.ts`). The build then creates `/insights/<slug>` and links to it from the homepage. All six articles are currently published.
+The full text of each article lives in `content/articles.ts`. Each article gets a generated share image at `/insights/<slug>/og.png`, Article structured data, and a publish date (`date` in `insights`). To publish one, set `published: true` on its matching entry in `insights` (`content/site.ts`). The build then creates `/insights/<slug>` and links to it from the homepage. All six articles are currently published.
 
 ### Contact form
 
@@ -129,3 +129,9 @@ Vercel Analytics is enabled automatically on Vercel builds (`VERCEL=1`) and is o
 - [ ] Run `npm run lint && npm run type-check && npm run build`
 
 See `docs/QA-REPORT.md` for the latest test results.
+
+## Quality gates
+
+- **Lighthouse CI** (`.github/workflows/lighthouse.yml`, config in `lighthouserc.json`) runs on every PR and push to `master`. It fails on accessibility, best-practices or SEO regressions and warns on performance. Reports are saved as the `lighthouse-reports` workflow artifact. Run it locally with `npx @lhci/cli@0.14.0 autorun` after `npm run build`.
+- **Contact form spam:** a hidden honeypot field (`_gotcha`); submissions that fill it are dropped in the browser.
+- **404:** `app/not-found.tsx` is exported as `404.html`, which GitHub Pages serves for unknown paths.

@@ -35,3 +35,6 @@ next-env.d.ts
 
 # verification builds
 /.next-verify/
+
+# Lighthouse CI reports
+.lighthouseci/
