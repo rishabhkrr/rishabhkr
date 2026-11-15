@@ -77,6 +77,8 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
           # Formspree form ID (public — it ships in the browser bundle anyway).
           NEXT_PUBLIC_FORMSPREE_ID: mjywyvbn
+          # Google Search Console (HTML-tag method; public).
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: XUn_Wm38YbHe9owmEXFGqs1M5g2RM3h-VAA--3GAvPY
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
