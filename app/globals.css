@@ -267,3 +267,54 @@ html.intro-done:not(.intro-played) [data-hero-anim] {
   0% { transform: translateX(-25%); }
   75%, 100% { transform: translateX(100%); }
 }
+
+/* ───────── Skiper UI · TextRoll (skiper58, CSS port) ───────── */
+.text-roll { line-height: 1.15; }
+.text-roll-letter { transition: transform 0.45s cubic-bezier(0.42, 0, 0.58, 1); }
+.text-roll-b .text-roll-letter { transform: translateY(100%); }
+.group:hover .text-roll-a .text-roll-letter,
+.group:focus-visible .text-roll-a .text-roll-letter { transform: translateY(-100%); }
+.group:hover .text-roll-b .text-roll-letter,
+.group:focus-visible .text-roll-b .text-roll-letter { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .text-roll-letter { transition: none; }
+  .group:hover .text-roll-a .text-roll-letter, .group:focus-visible .text-roll-a .text-roll-letter { transform: none; }
+  .group:hover .text-roll-b .text-roll-letter, .group:focus-visible .text-roll-b .text-roll-letter { transform: translateY(100%); }
+}
+
+/* ───────── Vengeance UI · GlowBorderCard (adapted) ───────── */
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.glow-card-ring,
+.glow-card-glow {
+  background: conic-gradient(from var(--glow-angle), transparent 0deg, hsl(32 95% 60% / 0.9) 60deg, hsl(var(--foreground) / 0.7) 120deg, transparent 180deg, transparent 360deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.glow-card-ring {
+  padding: 1px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.glow-card-glow {
+  filter: blur(18px);
+}
+.glow-card:hover .glow-card-ring,
+.glow-card:focus-within .glow-card-ring {
+  opacity: 1;
+  animation: glow-spin 4s linear infinite;
+}
+.glow-card:hover .glow-card-glow,
+.glow-card:focus-within .glow-card-glow {
+  opacity: 0.35;
+  animation: glow-spin 4s linear infinite;
+}
+@keyframes glow-spin { to { --glow-angle: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .glow-card:hover .glow-card-ring, .glow-card:focus-within .glow-card-ring,
+  .glow-card:hover .glow-card-glow, .glow-card:focus-within .glow-card-glow { animation: none; }
+}

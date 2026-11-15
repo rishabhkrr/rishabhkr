@@ -10,6 +10,7 @@ import { Logo } from './navbar';
 import { ContactForm } from './contact-form';
 import { ResumeButton } from './hero';
 import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
+import { ArrowLink } from '@/components/skiper/arrow-link';
 
 /* ───────────────────────── Insights ───────────────────────── */
 
@@ -36,7 +37,11 @@ export function Insights() {
               <>
                 <span className="font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
                 <span className="min-w-0">
-                  <span className="block font-medium">{post.title}</span>
+                  <span className="block font-medium">
+                    <span className="relative before:pointer-events-none before:absolute before:-bottom-0.5 before:left-0 before:h-px before:w-full before:origin-right before:scale-x-0 before:bg-current before:transition-transform before:duration-300 before:ease-[cubic-bezier(0.4,0,0.2,1)] before:content-[''] group-hover:before:origin-left group-hover:before:scale-x-100 group-focus-visible:before:origin-left group-focus-visible:before:scale-x-100">
+                      {post.title}
+                    </span>
+                  </span>
                   <span className="mt-0.5 block text-sm text-muted-foreground">{post.excerpt}</span>
                 </span>
                 <span className="flex items-center gap-2">
@@ -57,7 +62,7 @@ export function Insights() {
             return (
                 <li key={post.slug}>
                   {live ? (
-                    <a href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className={`${cls} transition-colors hover:bg-accent/40`}>
+                    <a href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className={`group ${cls} transition-colors hover:bg-accent/40`}>
                       {inner}
                     </a>
                   ) : (
@@ -147,20 +152,35 @@ export function Footer() {
         </p>
         <div className="flex gap-4">
           {links.linkedin && (
-            <a href={links.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+            <ArrowLink href={links.linkedin} external className="hover:text-foreground">
               LinkedIn
-            </a>
+            </ArrowLink>
           )}
           {links.github && (
-            <a href={links.github} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+            <ArrowLink href={links.github} external className="hover:text-foreground">
               GitHub
-            </a>
+            </ArrowLink>
           )}
           <a href="#home" className="hover:text-foreground">
             Back to top
           </a>
         </div>
       </div>
+      <p className="container mt-6 text-center text-xs text-muted-foreground/80 sm:text-left">
+        UI components adapted from{' '}
+        <a href="https://skiper-ui.com" target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:text-foreground hover:underline">
+          Skiper UI
+        </a>
+        ,{' '}
+        <a href="https://www.vengenceui.com" target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:text-foreground hover:underline">
+          Vengeance UI
+        </a>{' '}
+        and{' '}
+        <a href="https://animate-ui.com" target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:text-foreground hover:underline">
+          Animate UI
+        </a>
+        .
+      </p>
     </footer>
   );
 }

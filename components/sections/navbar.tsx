@@ -8,6 +8,8 @@ import { useTheme } from '@/hooks/useTheme';
 import { scrollToId, useLenis } from '@/components/animations/SmoothScroll';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { TextRoll } from '@/components/skiper/text-roll';
+import { ProgressiveBlur } from '@/components/skiper/progressive-blur';
 
 const ids = navItems.map((n) => n.id);
 
@@ -64,6 +66,8 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-nav px-3 pt-3 sm:px-4" style={{ paddingTop: 'calc(0.75rem + env(safe-area-inset-top, 0px))' }}>
+      {/* Skiper UI progressive blur: content softly dissolves under the floating nav (desktop only — backdrop blur is costly on phones). */}
+      <ProgressiveBlur position="top" height="96px" blurAmount="6px" className={cn('-z-10 hidden transition-opacity duration-500 md:block', scrolled ? 'opacity-100' : 'opacity-0')} />
       <nav
         aria-label="Primary"
         className={cn(
@@ -90,11 +94,11 @@ export function Navbar() {
                     onClick={go(item.id)}
                     aria-current={isActive ? 'true' : undefined}
                     className={cn(
-                      'block rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                      'group block rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                       isActive ? 'bg-accent text-foreground' : 'text-muted-foreground hover:text-foreground'
                     )}
                   >
-                    {item.label}
+                    <TextRoll>{item.label}</TextRoll>
                   </a>
                 </li>
               );

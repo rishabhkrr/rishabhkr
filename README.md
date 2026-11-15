@@ -2,7 +2,7 @@
 
 Personal portfolio for a Product-Focused Business Analyst & Product Owner (Fintech · ERP/WMS · AI automation).
 
-**Stack:** Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Framer Motion (desktop tilt only, lazy) · GSAP ScrollTrigger · Lenis · Lottie · three.js · Geist · Lucide icons
+**Stack:** Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS · shadcn/ui (Radix) · Magic UI-style effects · Motion (lazy: desktop tilt, metric counters) · Skiper UI · Vengeance UI · Animate UI · GSAP ScrollTrigger · Lenis · Lottie · three.js · Geist · Lucide icons
 
 ## Quick start
 
@@ -135,3 +135,18 @@ See `docs/QA-REPORT.md` for the latest test results.
 - **Lighthouse CI** (`.github/workflows/lighthouse.yml`, config in `lighthouserc.json`) runs on every PR and push to `master`. It fails on accessibility, best-practices or SEO regressions and warns on performance. Reports are saved as the `lighthouse-reports` workflow artifact. Run it locally with `npx @lhci/cli@0.14.0 autorun` after `npm run build`.
 - **Contact form spam:** a hidden honeypot field (`_gotcha`); submissions that fill it are dropped in the browser.
 - **404:** `app/not-found.tsx` is exported as `404.html`, which GitHub Pages serves for unknown paths.
+
+## Third-party UI components
+
+Copied into the repo (shadcn-registry style) and adapted to the site's palette and performance budget:
+
+| Component | Source | Where |
+| --- | --- | --- |
+| TextRoll (CSS port) | Skiper UI · skiper58 | Desktop navbar links |
+| ProgressiveBlur | Skiper UI · skiper41 | Under the floating navbar (desktop) |
+| ArrowLink | Skiper UI · skiper40 | Credential links, footer links, Insights titles |
+| InteractiveHoverButton | Vengeance UI | Contact form submit |
+| GlowBorderCard | Vengeance UI | Certification cards (glow on hover/focus) |
+| SlidingNumber | Animate UI | Impact metrics (lazy-loaded near view) |
+
+Skiper UI's free tier requires attribution; the footer credits all three libraries.

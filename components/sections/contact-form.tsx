@@ -1,9 +1,10 @@
 'use client';
 
-import { AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { links } from '@/content/site';
 import { PREFILL_EVENT } from '@/lib/contact';
+import { InteractiveHoverButton } from '@/components/vengeance/interactive-hover-button';
 import { Lottie } from '@/components/animations/Lottie';
 import { Button } from '@/components/ui/button';
 import { Input, Label, Textarea } from '@/components/ui/input';
@@ -162,17 +163,13 @@ export function ContactForm() {
         <p id="contact-form-note" className="text-xs text-muted-foreground">
           {FORMSPREE_ID ? 'Sent securely via Formspree.' : 'Opens your email app with the message ready to send.'}
         </p>
-        <Button type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? (
-            <>
-              <Loader2 className="animate-spin" /> Sending…
-            </>
-          ) : (
-            <>
-              Send message <ArrowRight />
-            </>
-          )}
-        </Button>
+        {status === 'sending' ? (
+          <Button type="submit" disabled>
+            <Loader2 className="animate-spin" /> Sending…
+          </Button>
+        ) : (
+          <InteractiveHoverButton type="submit">Send message</InteractiveHoverButton>
+        )}
       </div>
       <div aria-live="polite">
         {(status === 'success' || status === 'error') && feedback && (
