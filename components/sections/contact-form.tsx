@@ -33,6 +33,7 @@ export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [feedback, setFeedback] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
+  const trapRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const onPrefill = (e: Event) => {
@@ -86,6 +87,12 @@ export function ContactForm() {
       form.querySelector<HTMLElement>(`[name="${Object.keys(errs)[0]}"]`)?.focus();
       return;
     }
+    // Honeypot: people never see this field; bots that fill it get a quiet "success" and nothing is sent.
+    if (trapRef.current?.value) {
+      setStatus('success');
+      setFeedback("Thanks — your message is on its way. I'll reply soon.");
+      return;
+    }
     setStatus('sending');
     setFeedback('');
 
@@ -121,6 +128,10 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="relative grid gap-3" aria-describedby="contact-form-note">
+      <div aria-hidden className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden">
+        <label htmlFor="contact-website">Leave this field empty</label>
+        <input ref={trapRef} id="contact-website" name="_gotcha" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="grid gap-2">
           <Label htmlFor="contact-name">Name</Label>

@@ -27,7 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${meta.title} — ${profile.name}`,
     description: meta.excerpt,
     alternates: { canonical: `${siteUrl}/insights/${meta.slug}` },
-    openGraph: { type: 'article', title: meta.title, description: meta.excerpt },
+    openGraph: { type: 'article', title: meta.title, description: meta.excerpt, url: `${siteUrl}/insights/${meta.slug}`, ...(meta.date ? { publishedTime: meta.date } : {}), authors: [profile.name], images: [{ url: `${siteUrl}/insights/${meta.slug}/og.png`, width: 1200, height: 630, alt: meta.title }] },
+    twitter: { card: 'summary_large_image', title: meta.title, description: meta.excerpt, images: [`${siteUrl}/insights/${meta.slug}/og.png`] },
   };
 }
 
@@ -37,8 +38,25 @@ export default async function ArticlePage({ params }: Props) {
   const article = articles.find((a) => a.slug === slug);
   if (!meta || !article || !publishedSlugs().includes(slug)) notFound();
 
+  const url = `${siteUrl}/insights/${meta.slug}`;
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: meta.title,
+    description: meta.excerpt,
+    url,
+    mainEntityOfPage: url,
+    image: `${url}/og.png`,
+    ...(meta.date ? { datePublished: meta.date, dateModified: meta.date } : {}),
+    inLanguage: 'en',
+    articleSection: meta.topic,
+    author: { '@type': 'Person', name: profile.name, url: siteUrl },
+    publisher: { '@type': 'Person', name: profile.name, url: siteUrl },
+  };
+
   return (
     <article className="container max-w-3xl pb-24 pt-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c') }} />
       <Link href="/#insights" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> All insights
       </Link>
@@ -47,7 +65,15 @@ export default async function ArticlePage({ params }: Props) {
       </p>
       <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tighter md:text-5xl">{meta.title}</h1>
       <p className="mt-4 text-lg text-muted-foreground">{meta.excerpt}</p>
-      <p className="mt-6 text-sm text-muted-foreground">By {profile.name}</p>
+      <p className="mt-6 text-sm text-muted-foreground">
+        By {profile.name}
+        {meta.date && (
+          <>
+            {' · '}
+            <time dateTime={meta.date}>{new Date(`${meta.date}T00:00:00Z`).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>
+          </>
+        )}
+      </p>
       <div className="mt-10 space-y-6 border-t pt-10 leading-relaxed">
         {article.blocks.map((b, i) => {
           if (b.type === 'h2') return <h2 key={i} className="pt-4 text-2xl font-semibold tracking-tight">{b.text}</h2>;

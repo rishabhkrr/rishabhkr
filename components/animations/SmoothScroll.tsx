@@ -1,6 +1,7 @@
 'use client';
 
 import type Lenis from 'lenis';
+import { asset } from '@/lib/contact';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const LenisContext = createContext<Lenis | null>(null);
@@ -48,6 +49,11 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
 /** Scroll to an in-page section, via Lenis when active. */
 export function scrollToId(id: string, lenis: Lenis | null) {
+  // Off the homepage (articles, 404): go to the homepage section instead.
+  if (!document.getElementById('home')) {
+    window.location.href = id === 'home' ? asset('/') : `${asset('/')}#${id}`;
+    return;
+  }
   const el = id === 'home' ? document.body : document.getElementById(id);
   if (!el) return;
   const navH = 80;
