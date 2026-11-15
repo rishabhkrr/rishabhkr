@@ -1,8 +1,10 @@
 import { BarChart3, Boxes, ClipboardList, Compass, Cpu, Sparkles, type LucideIcon } from 'lucide-react';
 import { certifications, skillGroups } from '@/content/site';
+import { GlowBorderCard } from '@/components/vengeance/glow-border-card';
+import { ArrowLink } from '@/components/skiper/arrow-link';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { Badge } from '@/components/ui/badge';
-import { BadgeCheck, Hourglass, ArrowUpRight } from 'lucide-react';
+import { BadgeCheck, Hourglass } from 'lucide-react';
 import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
 const icons: Record<string, LucideIcon> = { compass: Compass, clipboard: ClipboardList, chart: BarChart3, cpu: Cpu, boxes: Boxes, sparkles: Sparkles };
@@ -62,6 +64,7 @@ export function Certifications() {
             const done = c.status === 'completed';
             return (
               <BlurFade key={c.name} delay={i * 0.05}>
+                <GlowBorderCard>
                 <div className={`flex h-full flex-col rounded-2xl border p-6 ${done ? 'bg-card' : 'border-dashed'}`}>
                   <div className="flex items-center justify-between">
                     {done ? <BadgeCheck className="h-5 w-5" /> : <Hourglass className="h-5 w-5 text-muted-foreground" />}
@@ -70,11 +73,14 @@ export function Certifications() {
                   <h3 className="mt-6 font-semibold leading-snug tracking-tight">{c.name}</h3>
                   {c.provider && <p className="mt-1 text-sm text-muted-foreground">{c.provider}</p>}
                   {c.credentialUrl && (
-                    <a href={c.credentialUrl} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-1 pt-5 text-sm font-medium hover:underline">
-                      View credential <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
+                    <span className="mt-auto pt-5">
+                      <ArrowLink href={c.credentialUrl} external className="text-sm font-medium">
+                        View credential
+                      </ArrowLink>
+                    </span>
                   )}
                 </div>
+                </GlowBorderCard>
               </BlurFade>
             );
           })}

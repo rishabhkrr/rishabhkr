@@ -1,10 +1,10 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useRef } from 'react';
 import { cn } from '@/lib/utils';
 
-/** Desktop-only 3D tilt + glare. Loaded lazily by <TiltCard>, so framer-motion stays off phones. */
+/** Desktop-only 3D tilt + glare. Loaded lazily by <TiltCard>, so motion stays off phones. */
 export default function Tilt3D({ children, className, max }: { children: React.ReactNode; className?: string; max: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const px = useMotionValue(0.5);
