@@ -94,7 +94,8 @@ export function ContactForm() {
         const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(fields),
+          // _subject sets the email subject in Formspree; `email` becomes the reply-to.
+          body: JSON.stringify({ ...fields, _subject: fields.subject }),
         });
         if (!res.ok) throw new Error(String(res.status));
         setStatus('success');
