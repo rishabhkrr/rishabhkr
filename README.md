@@ -125,7 +125,7 @@ Vercel Analytics is enabled automatically on Vercel builds (`VERCEL=1`) and is o
 - [ ] Review the case-study narrative in `content/case-studies.ts` for accuracy and confidentiality
 - [ ] Add `public/resume.pdf` and, optionally, `public/profile.jpg`
 - [ ] Set `NEXT_PUBLIC_SITE_URL` once the domain is final
-- [ ] (Optional) Set `NEXT_PUBLIC_FORMSPREE_ID`
+- [x] `NEXT_PUBLIC_FORMSPREE_ID` set in `.github/workflows/nextjs.yml` (form `mjywyvbn`)
 - [ ] Run `npm run lint && npm run type-check && npm run build`
 
 See `docs/QA-REPORT.md` for the latest test results.

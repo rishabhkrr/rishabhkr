@@ -75,6 +75,8 @@ jobs:
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          # Formspree form ID (public — it ships in the browser bundle anyway).
+          NEXT_PUBLIC_FORMSPREE_ID: mjywyvbn
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
