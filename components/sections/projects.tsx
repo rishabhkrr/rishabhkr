@@ -11,10 +11,11 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
+import { asset } from '@/lib/contact';
 import { CaseChapters } from '@/components/cinematic/case-chapters';
 import { SceneLabel, SceneTitle } from '@/components/cinematic/scene-title';
 
-function StatusBadge({ status }: { status: CaseStudy['status'] }) {
+export function StatusBadge({ status }: { status: CaseStudy['status'] }) {
   return status === 'Ongoing' ? <Badge variant="warning">Ongoing</Badge> : <Badge variant="secondary">{status}</Badge>;
 }
 
@@ -54,110 +55,154 @@ function List({ items }: { items: string[] }) {
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h4 className="mb-2.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">{title}</h4>
+      <h3 className="mb-2.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">{title}</h3>
       {children}
     </div>
   );
 }
 
-function CaseStudyBody({ s }: { s: CaseStudy }) {
+/** Tabs in the dialog; `flat` renders every section in order (case study pages, so all text is in the HTML). */
+export function CaseStudyBody({ s, flat = false }: { s: CaseStudy; flat?: boolean }) {
+  const sections = [
+    {
+      value: 'overview',
+      label: 'Overview',
+      content: (
+        <>
+          <p className="leading-relaxed">{s.overview}</p>
+          <Block title="Business problem">
+            <p className="text-sm leading-relaxed text-muted-foreground">{s.problem}</p>
+          </Block>
+          {s.existingProcess && (
+            <Block title="Existing process">
+              <ol className="grid gap-2 sm:grid-cols-2">
+                {s.existingProcess.map((p, i) => (
+                  <li key={p} className="flex gap-2.5 rounded-lg border p-3 text-sm">
+                    <span className="font-mono text-xs text-muted-foreground">0{i + 1}</span>
+                    {p}
+                  </li>
+                ))}
+              </ol>
+            </Block>
+          )}
+          <Block title="Objectives">
+            <List items={s.objectives} />
+          </Block>
+        </>
+      ),
+    },
+    {
+      value: 'role',
+      label: 'My role',
+      content: (
+        <>
+          <Block title="Responsibilities">
+            <List items={s.responsibilities} />
+          </Block>
+          <Block title="Requirements & approach">
+            <List items={s.approach} />
+          </Block>
+        </>
+      ),
+    },
+    {
+      value: 'solution',
+      label: 'Solution',
+      content: (
+        <>
+          {s.modules ? (
+            <div className="grid gap-3 sm:grid-cols-2">
+              {s.modules.map((m) => (
+                <div key={m.name} className="rounded-xl border p-4">
+                  <p className="text-sm font-medium">{m.name}</p>
+                  <ul className="mt-3 flex flex-wrap gap-1.5">
+                    {m.items.map((it) => (
+                      <li key={it}>
+                        <Badge variant="outline" className="font-normal">
+                          {it}
+                        </Badge>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Block title="Solution">
+              <List items={s.solution} />
+            </Block>
+          )}
+          {s.architecture && (
+            <Block title="System flow (simplified)">
+              <ol className="flex flex-wrap items-center gap-y-2">
+                {s.architecture.map((step, i) => (
+                  <li key={step} className="flex items-center">
+                    <span className="rounded-md border bg-muted/50 px-2.5 py-1.5 text-xs font-medium">{step}</span>
+                    {i < s.architecture!.length - 1 && <ArrowRight aria-hidden className="mx-1 h-3.5 w-3.5 text-muted-foreground" />}
+                  </li>
+                ))}
+              </ol>
+            </Block>
+          )}
+          <Block title="Stack">
+            <div className="flex flex-wrap gap-1.5">
+              {s.stack.map((t) => (
+                <Badge key={t} variant="secondary">
+                  {t}
+                </Badge>
+              ))}
+            </div>
+          </Block>
+        </>
+      ),
+    },
+    {
+      value: 'impact',
+      label: 'Impact',
+      content: (
+        <>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {s.outcomes.map((o) => (
+              <OutcomeCard key={o.label} o={o} />
+            ))}
+          </ul>
+          {s.outcomes.some((o) => o.kind === 'target') && <p className="text-xs text-muted-foreground">Targets are goals for ongoing work, not reported results.</p>}
+          <Block title="Lessons learned">
+            <List items={s.learnings} />
+          </Block>
+        </>
+      ),
+    },
+  ];
+
+  if (flat)
+    return (
+      <div className="space-y-14">
+        {sections.map((x) => (
+          <section key={x.value} aria-labelledby={`cs-${x.value}`} className="space-y-6">
+            <h2 id={`cs-${x.value}`} className="text-2xl font-semibold tracking-tight">
+              {x.label}
+            </h2>
+            {x.content}
+          </section>
+        ))}
+      </div>
+    );
+
   return (
     <Tabs defaultValue="overview" key={s.id}>
       <TabsList>
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="role">My role</TabsTrigger>
-        <TabsTrigger value="solution">Solution</TabsTrigger>
-        <TabsTrigger value="impact">Impact</TabsTrigger>
+        {sections.map((x) => (
+          <TabsTrigger key={x.value} value={x.value}>
+            {x.label}
+          </TabsTrigger>
+        ))}
       </TabsList>
-
-      <TabsContent value="overview" className="space-y-6">
-        <p className="leading-relaxed">{s.overview}</p>
-        <Block title="Business problem">
-          <p className="text-sm leading-relaxed text-muted-foreground">{s.problem}</p>
-        </Block>
-        {s.existingProcess && (
-          <Block title="Existing process">
-            <ol className="grid gap-2 sm:grid-cols-2">
-              {s.existingProcess.map((p, i) => (
-                <li key={p} className="flex gap-2.5 rounded-lg border p-3 text-sm">
-                  <span className="font-mono text-xs text-muted-foreground">0{i + 1}</span>
-                  {p}
-                </li>
-              ))}
-            </ol>
-          </Block>
-        )}
-        <Block title="Objectives">
-          <List items={s.objectives} />
-        </Block>
-      </TabsContent>
-
-      <TabsContent value="role" className="space-y-6">
-        <Block title="Responsibilities">
-          <List items={s.responsibilities} />
-        </Block>
-        <Block title="Requirements & approach">
-          <List items={s.approach} />
-        </Block>
-      </TabsContent>
-
-      <TabsContent value="solution" className="space-y-6">
-        {s.modules ? (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {s.modules.map((m) => (
-              <div key={m.name} className="rounded-xl border p-4">
-                <p className="text-sm font-medium">{m.name}</p>
-                <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {m.items.map((it) => (
-                    <li key={it}>
-                      <Badge variant="outline" className="font-normal">
-                        {it}
-                      </Badge>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <Block title="Solution">
-            <List items={s.solution} />
-          </Block>
-        )}
-        {s.architecture && (
-          <Block title="System flow (simplified)">
-            <ol className="flex flex-wrap items-center gap-y-2">
-              {s.architecture.map((step, i) => (
-                <li key={step} className="flex items-center">
-                  <span className="rounded-md border bg-muted/50 px-2.5 py-1.5 text-xs font-medium">{step}</span>
-                  {i < s.architecture!.length - 1 && <ArrowRight aria-hidden className="mx-1 h-3.5 w-3.5 text-muted-foreground" />}
-                </li>
-              ))}
-            </ol>
-          </Block>
-        )}
-        <Block title="Stack">
-          <div className="flex flex-wrap gap-1.5">
-            {s.stack.map((t) => (
-              <Badge key={t} variant="secondary">
-                {t}
-              </Badge>
-            ))}
-          </div>
-        </Block>
-      </TabsContent>
-
-      <TabsContent value="impact" className="space-y-6">
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {s.outcomes.map((o) => (
-            <OutcomeCard key={o.label} o={o} />
-          ))}
-        </ul>
-        {s.outcomes.some((o) => o.kind === 'target') && <p className="text-xs text-muted-foreground">Targets are goals for ongoing work, not reported results.</p>}
-        <Block title="Lessons learned">
-          <List items={s.learnings} />
-        </Block>
-      </TabsContent>
+      {sections.map((x) => (
+        <TabsContent key={x.value} value={x.value} className="space-y-6">
+          {x.content}
+        </TabsContent>
+      ))}
     </Tabs>
   );
 }
@@ -248,6 +293,9 @@ export function Projects() {
                 </div>
                 <DialogTitle className="mt-2">{study.title}</DialogTitle>
                 <DialogDescription className="mt-1">{study.tagline}</DialogDescription>
+                <a href={asset(`/work/${study.id}`)} className="mt-3 inline-flex items-center gap-1 text-sm font-medium underline-offset-4 hover:underline">
+                  Open full case study <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
               </div>
               <div data-lenis-prevent className="overflow-y-auto overscroll-contain p-6">
                 <CaseStudyBody s={study} />

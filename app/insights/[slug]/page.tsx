@@ -7,6 +7,8 @@ import { articles, getArticle } from '@/content/articles';
 
 export const dynamicParams = false;
 
+const slugify = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
 /** Only published insights that have a full article get a page. */
 const publishedSlugs = () => insights.filter((i) => i.published && getArticle(i.slug)).map((i) => i.slug);
 
@@ -38,6 +40,7 @@ export default async function ArticlePage({ params }: Props) {
   const article = articles.find((a) => a.slug === slug);
   if (!meta || !article || !publishedSlugs().includes(slug)) notFound();
 
+  const toc = article.blocks.flatMap((b) => (b.type === 'h2' ? [b.text] : []));
   const url = `${siteUrl}/insights/${meta.slug}`;
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -56,6 +59,7 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <article className="container max-w-3xl pb-24 pt-32">
+      <div aria-hidden className="read-progress" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c') }} />
       <Link href="/#insights" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> All insights
@@ -74,9 +78,23 @@ export default async function ArticlePage({ params }: Props) {
           </>
         )}
       </p>
+      {toc.length >= 3 && (
+        <nav aria-label="On this page" className="mt-10 rounded-xl border p-5">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">On this page</p>
+          <ol className="mt-3 space-y-1.5 text-sm">
+            {toc.map((t) => (
+              <li key={t}>
+                <a href={`#${slugify(t)}`} className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+                  {t}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
       <div className="mt-10 space-y-6 border-t pt-10 leading-relaxed">
         {article.blocks.map((b, i) => {
-          if (b.type === 'h2') return <h2 key={i} className="pt-4 text-2xl font-semibold tracking-tight">{b.text}</h2>;
+          if (b.type === 'h2') return <h2 key={i} id={slugify(b.text)} className="scroll-mt-24 pt-4 text-2xl font-semibold tracking-tight">{b.text}</h2>;
           if (b.type === 'ul')
             return (
               <ul key={i} className="list-disc space-y-2 pl-5 text-muted-foreground">

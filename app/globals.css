@@ -318,3 +318,21 @@ html.intro-done:not(.intro-played) [data-hero-anim] {
   .glow-card:hover .glow-card-ring, .glow-card:focus-within .glow-card-ring,
   .glow-card:hover .glow-card-glow, .glow-card:focus-within .glow-card-glow { animation: none; }
 }
+
+/* Reading progress (articles, case studies): CSS scroll-driven animation, no JS.
+   Browsers without animation-timeline simply don't show the bar. */
+.read-progress { display: none; }
+@supports (animation-timeline: scroll()) {
+  .read-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    height: 2px;
+    background: hsl(var(--foreground));
+    transform-origin: 0 50%;
+    animation: read-progress linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes read-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}

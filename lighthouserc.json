@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "staticDistDir": "./out",
-      "url": ["http://localhost/", "http://localhost/insights/sql-for-business-analysts.html"],
+      "url": ["http://localhost/", "http://localhost/insights/sql-for-business-analysts.html", "http://localhost/work/erp-wms.html"],
       "numberOfRuns": 3
     },
     "assert": {
